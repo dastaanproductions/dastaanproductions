@@ -37,7 +37,7 @@ export default function Header() {
 
           {/* Navbar menu */}
           <div className={`navbar-menu ${showMenu ? 'active' : ''}`}>
-            {/* <Link className="nav-link" to="/" onClick={() => scrollToSection('home')}>Home</Link> */}
+            <Link className="nav-link" to="/" onClick={() => scrollToSection('home')}>Home</Link>
             <Link className="nav-link" to="#" onClick={() => scrollToSection('about')}>About</Link>
             <Link className="nav-link" to="#" onClick={() => scrollToSection('team')}>Team</Link>
             <Link className="nav-link" to="#" onClick={() => scrollToSection('clients')}>Clients</Link>
