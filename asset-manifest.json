@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dastaanproductions/static/css/main.da4c248d.css",
-    "main.js": "/dastaanproductions/static/js/main.df308f16.js",
+    "main.js": "/dastaanproductions/static/js/main.8ff841c9.js",
     "static/js/453.3f706390.chunk.js": "/dastaanproductions/static/js/453.3f706390.chunk.js",
     "static/media/homeImage.png": "/dastaanproductions/static/media/homeImage.b7e882ebbaca0f8a1066.png",
     "static/media/image8.JPG": "/dastaanproductions/static/media/image8.d32fef9d058191164827.JPG",
@@ -37,11 +37,11 @@
     "static/media/conceal.jpg": "/dastaanproductions/static/media/conceal.9ccdb5135e1d4ad711f2.jpg",
     "index.html": "/dastaanproductions/index.html",
     "main.da4c248d.css.map": "/dastaanproductions/static/css/main.da4c248d.css.map",
-    "main.df308f16.js.map": "/dastaanproductions/static/js/main.df308f16.js.map",
+    "main.8ff841c9.js.map": "/dastaanproductions/static/js/main.8ff841c9.js.map",
     "453.3f706390.chunk.js.map": "/dastaanproductions/static/js/453.3f706390.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.da4c248d.css",
-    "static/js/main.df308f16.js"
+    "static/js/main.8ff841c9.js"
   ]
 }
