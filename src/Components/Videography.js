@@ -1,7 +1,9 @@
 import React from 'react';
+import LazyLoad from 'react-lazyload'; // Import LazyLoad
 import './Videography.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo, faFilm, faCamera, faPlayCircle, faClapperboard, faVideoSlash, faTv, faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
+
 import image1 from './videography/image1.png';
 import image2 from './videography/mrbeast.png';
 import image3 from './videography/image3.jpg';
@@ -46,8 +48,10 @@ const Videography = () => {
               Checkout <span>&rarr;</span>
             </button>
           </div>
-          <div className="video-image" style={{ backgroundImage: `url(${video.image})` }}></div>
-          <div className="video-overlay"></div>
+          <LazyLoad height={200} offset={100}> {/* LazyLoad wrapper */}
+              <div className="video-image" style={{ backgroundImage: `url(${video.image})` }}></div>
+            </LazyLoad>
+                      <div className="video-overlay"></div>
         </div>
       ))}
     </div>
