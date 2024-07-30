@@ -1,0 +1,182 @@
+.contact-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    background-color: #121212;
+    color: #ffffff;
+    box-sizing: border-box; /* Ensures padding does not affect width */
+}
+
+.left, .right {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contact-heading {
+    font-size: 3em; /* Adjusted font size */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 2em; /* Adjusted font size */
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #0f99e9;
+    color: #ffffff;
+    font-size: 1.5em; /* Adjusted font size */
+}
+
+.info-text h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.info-text p, .info-text a {
+    margin: 0;
+    font-size: 1.2em;
+    color: #0f99e9;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    background-color: #333;
+    color: #ffffff;
+    box-sizing: border-box; /* Ensures padding does not affect width */
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 200px;
+}
+
+.submit-button {
+    padding: 15px 30px;
+    font-size: 1.3em;
+    border: none;
+    border-radius: 10px;
+    background-color: #0f99e9;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #0a7cbc;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .contact-section {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .left, .right {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .contact-heading {
+        font-size: 2.5em; /* Adjusted font size */
+        margin-bottom: 25px;
+    }
+
+    .social-icons {
+        font-size: 2em;
+        margin-bottom: 25px;
+    }
+
+    .info-item {
+        gap: 15px;
+    }
+
+    .icon-circle {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3em;
+    }
+
+    .info-text h3, .info-text p, .info-text a {
+        font-size: 1.1em; /* Adjusted font size for smaller screens */
+    }
+
+    .form-group label {
+        font-size: 1.2em;
+    }
+
+    .form-group input, .form-group textarea {
+        font-size: 1em; /* Adjusted font size */
+        padding: 12px; /* Adjusted padding */
+    }
+
+    .submit-button {
+        font-size: 1.2em; /* Adjusted font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-heading {
+        font-size: 2em; /* Further reduced font size for very small screens */
+    }
+
+    .social-icons {
+        font-size: 1.5em; /* Further reduced font size */
+    }
+
+    .info-text h3, .info-text p, .info-text a {
+        font-size: 1em; /* Further reduced font size */
+    }
+
+    .form-group label {
+        font-size: 1em; /* Further reduced font size */
+    }
+
+    .form-group input, .form-group textarea {
+        font-size: 0.9em; /* Further reduced font size */
+        padding: 10px; /* Further reduced padding */
+    }
+
+    .submit-button {
+        font-size: 1em; /* Further reduced font size */
+    }
+}

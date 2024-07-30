@@ -1,0 +1,63 @@
+/* ScrollUpButton.css */
+.scroll-up-button {
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fbc604;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1000;
+  display: none; /* Hidden by default */
+  transition: opacity 0.3s, transform 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scroll-up-button.show {
+  display: flex; /* Show the button when needed */
+  opacity: 1;
+}
+
+.scroll-up-button:hover {
+  background: linear-gradient(45deg, #af4261, #f3ec78);
+  transform: translateY(-5px);
+}
+
+.scroll-up-icon {
+  font-size: 1.5rem;
+}
+
+/* Media Queries for Smaller Screens */
+@media (max-width: 768px) {
+  .scroll-up-button {
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    padding: 0; /* Adjusted padding */
+  }
+
+  .scroll-up-icon {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-up-button {
+    width: 60px;
+    height: 60px;
+    bottom: 15px;
+    right: 15px;
+    padding: 0; /* Adjusted padding */
+  }
+
+  .scroll-up-icon {
+    font-size: 1rem;
+  }
+}

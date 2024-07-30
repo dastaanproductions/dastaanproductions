@@ -1,0 +1,159 @@
+.team-section {
+    background-color: #e0f7fa; /* Light background color */
+    padding: 80px 20px; /* Increased padding for a spacious look */
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.carousel-inner {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.team-card {
+    margin-top: 10px;
+    width: 100%; /* Set width to 100% */
+    max-width: 320px; /* Set a maximum width */
+    height: 300px; /* Adjust height to fit smaller screens */
+    margin-right: 20px; /* Margin between cards */
+    border: none; /* Removed border */
+    border-radius: 20px; /* Rounded corners */
+    overflow: hidden; /* Ensure content stays within borders */
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft box shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.card-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.card-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content:hover .member-info {
+    transform: translateY(-50%);
+}
+
+.member-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px; /* Adjust padding for smaller screens */
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.member-info h3 {
+    font-size: 1.5em; /* Adjust font size for smaller screens */
+    margin-bottom: 5px;
+}
+
+.member-info p {
+    font-size: 0.9em; /* Adjust font size for smaller screens */
+    line-height: 1.4;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: rgba(15, 153, 233, 0.8); /* Blue background color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 5px; /* Reduced padding */
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px; /* Adjusted size */
+    height: 40px; /* Adjusted size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(15, 153, 233, 1); /* Darker blue on hover */
+}
+
+.carousel-control-prev {
+    left: 10px; /* Adjusted position from left */
+}
+
+.carousel-control-next {
+    right: 10px; /* Adjusted position from right */
+}
+
+.main-heading {
+    color: #fbc604; /* Yellow color */
+    font-family: Oswald, sans-serif; /* Font-family for beautiful headings */
+    font-size: 4rem; /* Adjust size as needed */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .team-card {
+        max-width: 240px; /* Adjust width for smaller screens */
+        height: 50vw; /* Height based on viewport width */
+        margin-right: 10px; /* Reduced margin */
+    }
+
+    .carousel-inner {
+        width: calc(100% - 60px); /* Adjust width to account for button size */
+    }
+
+    .carousel-control-prev {
+        left: -5px; /* Adjusted distance from left */
+        width: 30px; /* Smaller width */
+        height: 30px; /* Smaller height */
+    }
+
+    .carousel-control-next {
+        right: 5px; /* Adjusted distance from right */
+        width: 30px; /* Smaller width */
+        height: 30px; /* Smaller height */
+    }
+
+    .member-info {
+        padding: 5px; /* Adjust padding for smaller screens */
+    }
+
+    .member-info h3 {
+        font-size: 1.2em; /* Smaller font size for heading */
+    }
+
+    .member-info p {
+        font-size: 0.8em; /* Smaller font size for paragraph */
+    }
+}
