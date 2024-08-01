@@ -1,16 +1,20 @@
 {
   "files": {
     "main.css": "/dastaanproductions/static/css/main.da4c248d.css",
-    "main.js": "/dastaanproductions/static/js/main.8ff841c9.js",
+    "main.js": "/dastaanproductions/static/js/main.a236344c.js",
     "static/js/453.3f706390.chunk.js": "/dastaanproductions/static/js/453.3f706390.chunk.js",
     "static/media/homeImage.png": "/dastaanproductions/static/media/homeImage.b7e882ebbaca0f8a1066.png",
+    "static/media/image9.jpg": "/dastaanproductions/static/media/image9.024e0e45b0958b999c48.jpg",
     "static/media/image8.JPG": "/dastaanproductions/static/media/image8.d32fef9d058191164827.JPG",
     "static/media/image2.jpg": "/dastaanproductions/static/media/image2.4454a38aa55b3d5b9cea.jpg",
     "static/media/image7.JPG": "/dastaanproductions/static/media/image7.1a98966ce9b3456bb893.JPG",
     "static/media/image5.jpg": "/dastaanproductions/static/media/image5.c20ea480222739ed5f23.jpg",
     "static/media/mrbeast.png": "/dastaanproductions/static/media/mrbeast.b0d7eddca56af63b66fb.png",
+    "static/media/image10.jpg": "/dastaanproductions/static/media/image10.643c0142e2cddd998355.jpg",
     "static/media/image4.jpg": "/dastaanproductions/static/media/image4.c152c860ed899d118175.jpg",
     "static/media/image3.jpg": "/dastaanproductions/static/media/image3.86d7f44f4c516fe8f8fb.jpg",
+    "static/media/image11.JPG": "/dastaanproductions/static/media/image11.06404c09b75cb28c0dc0.JPG",
+    "static/media/image12.jpg": "/dastaanproductions/static/media/image12.cc2e7a84f37c1857a85e.jpg",
     "static/media/image1.jpg": "/dastaanproductions/static/media/image1.eb0b96eb7b52ae7b6253.jpg",
     "static/media/member3.png": "/dastaanproductions/static/media/member3.77f805374f7a59032ea8.png",
     "static/media/ArabotoLight.ttf": "/dastaanproductions/static/media/ArabotoLight.a9ebcd72be5a99bf41ee.ttf",
@@ -37,11 +41,11 @@
     "static/media/conceal.jpg": "/dastaanproductions/static/media/conceal.9ccdb5135e1d4ad711f2.jpg",
     "index.html": "/dastaanproductions/index.html",
     "main.da4c248d.css.map": "/dastaanproductions/static/css/main.da4c248d.css.map",
-    "main.8ff841c9.js.map": "/dastaanproductions/static/js/main.8ff841c9.js.map",
+    "main.a236344c.js.map": "/dastaanproductions/static/js/main.a236344c.js.map",
     "453.3f706390.chunk.js.map": "/dastaanproductions/static/js/453.3f706390.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.da4c248d.css",
-    "static/js/main.8ff841c9.js"
+    "static/js/main.a236344c.js"
   ]
 }
