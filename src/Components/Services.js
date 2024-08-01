@@ -9,17 +9,27 @@ import image5 from './workImages/image5.jpg';
 import image6 from './workImages/image6.JPG';
 import image7 from './workImages/image7.JPG';
 import image8 from './workImages/image8.JPG';
+import image9 from './workImages/image9.jpg';
+import image10 from './workImages/image10.jpg';
+import image11 from './workImages/image11.JPG';
+import image12 from './workImages/image12.jpg';
 
 const images = [
-  { src: image1, text: 'Product photography' },
-  { src: image2, text: 'Street photography' },
-  { src: image7, text: 'Wedding photography' },
-  { src: image4, text: 'Street photography' },
-  { src: image5, text: 'Street photography' },
-  { src: image6, text: 'Wedding photography' },
-  { src: image3, text: 'Product photography' },
-  
-  { src: image8, text: 'Wedding photography' },
+  { src: image1, text: 'Product Photography' },
+  { src: image10, text: 'Street Photography' },
+
+  { src: image11, text: 'Wedding Photography' },
+
+  { src: image4, text: 'Street Photography' },
+  { src: image5, text: 'Street Photography' },
+  { src: image6, text: 'Wedding Photography' },
+  { src: image3, text: 'Product Photography' },
+  { src: image8, text: 'Wedding Photography' },
+  { src: image9, text: 'Product Photography' },
+  { src: image7, text: 'Wedding Photography' },
+  { src: image2, text: 'Street Photography' },
+
+  { src: image12, text: 'Street Photography' },
 ];
 
 const ImageGallery = () => {
