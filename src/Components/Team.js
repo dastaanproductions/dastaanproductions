@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import './Team.css';
 
-import member1 from './teamImages/member1.png';
-import member2 from './teamImages/member2.png';
-import member3 from './teamImages/member3.png';
-import member4 from './teamImages/member4.png';
-import member5 from './teamImages/qasim.png';
+import member1 from './teamImages/member1.jpg';
+import member2 from './teamImages/member2.jpg';
+import member3 from './teamImages/member3.jpg';
+import member4 from './teamImages/member4.jpg';
+import member5 from './teamImages/member5.jpg';
 
 
 

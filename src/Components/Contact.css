@@ -166,7 +166,9 @@
     .info-text h3, .info-text p, .info-text a {
         font-size: 1em; /* Further reduced font size */
     }
-
+    .info-item {
+        gap: 10px;
+    }
     .form-group label {
         font-size: 1em; /* Further reduced font size */
     }

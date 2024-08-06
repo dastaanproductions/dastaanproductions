@@ -115,12 +115,8 @@
 }
 
 @media (max-width: 480px) {
-    .clients-wrapper {
-        width: 100%;
-    }
+    
     .clients-heading {
-        
-       
         font-size: 3rem; /* Adjust size as needed */
         
     }

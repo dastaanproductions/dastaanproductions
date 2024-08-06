@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useTransition, animated } from '@react-spring/web';
 import './Home.css'; // Import the CSS file
-import homeImage1 from './homeImage.png'; // Ensure the path is correct
+import homeImage1 from './homeImage.jpg'; // Ensure the path is correct
 import homeImage2 from './homeImage1.jpg'; // Ensure the path is correct
 import About from './About';
 import Team from './Team';
