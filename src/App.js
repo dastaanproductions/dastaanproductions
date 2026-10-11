@@ -1,28 +1,42 @@
-import React from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './Components/Header';
-//import NavBar from './NavBar';
-import Home from './Components/Home';
-import About from './Components/About';
-import Team from './Components/Team';
-import Clients from './Components/Clients';
-import Services from './Components/Services';
-import Contact from './Components/Contact';
+import React, { useEffect } from 'react';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Nav from './site/components/Nav';
+import Footer from './site/components/Footer';
+import WhatsAppFloat from './site/components/WhatsAppFloat';
+import Home from './site/pages/Home';
+import Work from './site/pages/Work';
+import './site/styles/site.css';
+
+// Scrolls to the top on a new page, or to a section when asked to.
+function ScrollManager() {
+  const location = useLocation();
+  useEffect(() => {
+    const target = location.state && location.state.scrollTo;
+    if (target) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(target);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 60);
+      return () => clearTimeout(timer);
+    }
+    window.scrollTo(0, 0);
+    return undefined;
+  }, [location]);
+  return null;
+}
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </div>
+      <ScrollManager />
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/work" element={<Work />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+      <Footer />
+      <WhatsAppFloat />
     </Router>
   );
 }
