@@ -1,4 +1,12 @@
-# Getting Started with Create React App
+# Dastaan Productions
+
+The website for Dastaan Productions, live at [dastaanproductions.art](https://dastaanproductions.art/).
+
+- **Pages:** `src/site/pages` (Home and Work)
+- **Content:** contact details, team, clients and services in `src/site/data/siteInfo.js`; videos in `src/site/data/videos.js`
+- **Deploying:** every push to `main` is built and published to GitHub Pages by `.github/workflows/deploy.yml`
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
