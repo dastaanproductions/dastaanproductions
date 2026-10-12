@@ -4,15 +4,13 @@ import Reveal from '../components/Reveal';
 import VideoCard from '../components/VideoCard';
 import VideoModal from '../components/VideoModal';
 import { categories } from '../data/videos';
+import { scrollToId } from '../scroll';
 
 export default function Work() {
   const [playing, setPlaying] = useState(null);
   const shown = categories.filter((c) => c.videos.length > 0);
 
-  const jump = (id) => {
-    const el = document.getElementById(`cat-${id}`);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  const jump = (id) => scrollToId(`cat-${id}`);
 
   return (
     <main className="work-page">

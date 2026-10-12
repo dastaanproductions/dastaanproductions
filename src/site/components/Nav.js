@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { scrollToId } from '../scroll';
 
 // Floating pill menu. Section links scroll on the homepage;
 // from another page they go home first, then scroll.
@@ -25,8 +26,7 @@ export default function Nav() {
     e.preventDefault();
     setOpen(false);
     if (location.pathname === '/') {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      scrollToId(id);
     } else {
       navigate('/', { state: { scrollTo: id } });
     }

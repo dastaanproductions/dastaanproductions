@@ -13,10 +13,13 @@ export default function VideoModal({ video, onClose }) {
     document.addEventListener('keydown', onKey);
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    // Remember the video card that opened the player so focus goes back there on close.
+    const opener = document.activeElement;
     if (closeRef.current) closeRef.current.focus();
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = previousOverflow;
+      if (opener && opener.focus) opener.focus({ preventScroll: true });
     };
   }, [video, onClose]);
 
