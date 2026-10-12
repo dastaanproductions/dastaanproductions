@@ -49,21 +49,40 @@ export default function Reviews({ items, hold = 8000 }) {
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${count}`}
           >
-            <span className="review-mark" aria-hidden="true">
-              “
-            </span>
-            <blockquote>{r.quote}</blockquote>
-            <figcaption>
-              {r.rating && (
-                <span className="review-stars" aria-label={`${r.rating} out of 5 stars`}>
-                  {Array.from({ length: 5 }, (_, s) => (
-                    <FaStar key={s} aria-hidden="true" className={s < Math.round(r.rating) ? 'lit' : ''} />
-                  ))}
+            {r.image ? (
+              // Opens the full-size screenshot, which phones can pinch-zoom
+              <a
+                className="review-zoom"
+                href={r.image}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={i === active ? 0 : -1}
+                style={{ '--w': `${Math.min(100, ((r.width || 1568) / 1568) * 100)}%` }}
+              >
+                <img className="review-shot" src={r.image} alt={r.alt} loading="lazy" />
+                <span className="review-hint" aria-hidden="true">
+                  Tap to read
                 </span>
-              )}
-              {r.client && <span className="review-client">{r.client}</span>}
-              {r.project && <span className="review-project">{r.project}</span>}
-            </figcaption>
+              </a>
+            ) : (
+              <>
+                <span className="review-mark" aria-hidden="true">
+                  “
+                </span>
+                <blockquote>{r.quote}</blockquote>
+                <figcaption>
+                  {r.rating && (
+                    <span className="review-stars" aria-label={`${r.rating} out of 5 stars`}>
+                      {Array.from({ length: 5 }, (_, s) => (
+                        <FaStar key={s} aria-hidden="true" className={s < Math.round(r.rating) ? 'lit' : ''} />
+                      ))}
+                    </span>
+                  )}
+                  {r.client && <span className="review-client">{r.client}</span>}
+                  {r.project && <span className="review-project">{r.project}</span>}
+                </figcaption>
+              </>
+            )}
           </figure>
         ))}
       </div>
