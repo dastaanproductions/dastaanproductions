@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import {
   FaWhatsapp,
@@ -219,15 +220,38 @@ function Photography() {
   );
 }
 
-// The team as a strip of film frames: narrow black-and-white slices that
-// open into a full colour close-up when hovered or focused.
-function Member({ m, n }) {
+function focusVisible(el) {
+  try {
+    return el.matches(':focus-visible');
+  } catch {
+    return true;
+  }
+}
+
+// The team as a strip of film frames: slim black-and-white slices, one of
+// which is open as a full colour close-up. Hover (desktop) or tap (phones)
+// opens a frame; tapping an open frame follows its Instagram link.
+function Member({ m, n, open, onOpen }) {
   const Tag = m.instagram ? 'a' : 'div';
   const link = m.instagram
     ? { href: m.instagram, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${m.name} (opens Instagram)` }
     : { tabIndex: 0, 'aria-label': m.name };
+  const handleClick = (e) => {
+    if (!open) {
+      e.preventDefault();
+      onOpen(n, true);
+    }
+  };
   return (
-    <Tag className="member" {...link}>
+    <Tag
+      className={`member ${open ? 'open' : ''}`}
+      {...link}
+      onClick={handleClick}
+      // Only a real mouse hover or keyboard focus opens a frame directly;
+      // on touch screens the first tap does it (see handleClick).
+      onPointerEnter={(e) => e.pointerType === 'mouse' && onOpen(n, false)}
+      onFocus={(e) => focusVisible(e.target) && onOpen(n, true)}
+    >
       <img src={m.img} alt="" loading="lazy" />
       <span className="member-shade" aria-hidden="true" />
       <span className="member-num" aria-hidden="true">
@@ -240,14 +264,33 @@ function Member({ m, n }) {
 }
 
 function Team() {
+  const [active, setActive] = useState(0);
+  const [touched, setTouched] = useState(false);
+  const { ref, inView } = useInView({ threshold: 0.15 });
+
+  // On touch screens, slowly cycle through the cast while it's on screen,
+  // until someone taps a frame themselves.
+  useEffect(() => {
+    const touch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!touch || reduce || touched || !inView) return undefined;
+    const id = setInterval(() => setActive((i) => (i + 1) % team.length), 3200);
+    return () => clearInterval(id);
+  }, [touched, inView]);
+
+  const open = (n, byUser) => {
+    setActive(n);
+    if (byUser) setTouched(true);
+  };
+
   return (
-    <section id="team" className="team">
+    <section id="team" className="team" ref={ref}>
       <Heading over="The cast" ur="ہماری ٹیم">
         The people <em>behind it.</em>
       </Heading>
       <Reveal className="cast-strip">
         {team.map((m, n) => (
-          <Member key={m.name} m={m} n={n} />
+          <Member key={m.name} m={m} n={n} open={n === active} onOpen={open} />
         ))}
       </Reveal>
     </section>
