@@ -390,10 +390,11 @@ h2 em {
   justify-content: flex-end;
   padding: 0 28px calc(9vh + 40px);
   overflow: hidden;
-  background: #000;
+  background: var(--bg);
 }
 
-/* Cinemascope bars: start closed, open to a widescreen frame */
+/* Cinemascope bars: start closed, open to a widescreen frame. They use the
+   page colour so the hero flows into the next section without a band. */
 .hero::before,
 .hero::after {
   content: '';
@@ -402,7 +403,7 @@ h2 em {
   right: 0;
   z-index: 4;
   height: 50%;
-  background: #000;
+  background: var(--bg);
   pointer-events: none;
   animation: barsOpen 2s var(--ease-in-out) 0.2s forwards;
 }
@@ -487,7 +488,7 @@ h2 em {
 /* Grade: teal shadows, dark base for the title, soft vignette */
 .hero-grade {
   background:
-    linear-gradient(180deg, rgba(10, 9, 8, 0.15) 0%, rgba(10, 9, 8, 0) 35%, rgba(10, 9, 8, 0.55) 70%, rgba(10, 9, 8, 0.92) 100%),
+    linear-gradient(180deg, rgba(10, 9, 8, 0.15) 0%, rgba(10, 9, 8, 0) 35%, rgba(10, 9, 8, 0.55) 65%, var(--bg) calc(100% - 9vh)),
     radial-gradient(ellipse 80% 70% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.55) 100%),
     linear-gradient(90deg, rgba(var(--teal), 0.22), transparent 60%);
 }
