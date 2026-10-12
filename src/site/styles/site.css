@@ -1487,9 +1487,8 @@ h2 em {
 }
 
 /* ── Team: a strip of film frames ────────────── */
-/* Six narrow black-and-white frames in one row. The hovered or focused
-   frame opens into a colour close-up; with nothing hovered, the first
-   (lead) frame is open. */
+/* Slim black-and-white frames; the .open one (hovered, focused, tapped,
+   or cycled to on phones) widens into a colour close-up. */
 .cast-strip {
   max-width: 1200px;
   height: clamp(340px, 46vh, 460px);
@@ -1505,7 +1504,13 @@ h2 em {
   min-width: 0;
   overflow: hidden;
   background: var(--bg-2);
-  transition: flex-grow 0.9s var(--ease-out);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: flex-grow 0.9s var(--ease-out), height 0.9s var(--ease-out);
+}
+
+.member.open {
+  flex-grow: 4.2;
 }
 
 .member img {
@@ -1520,24 +1525,15 @@ h2 em {
   transition: filter 0.9s ease, transform 1.4s var(--ease-out);
 }
 
+.member.open img {
+  filter: none;
+  transform: scale(1);
+}
+
 .member-shade {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(10, 9, 8, 0) 45%, rgba(10, 9, 8, 0.85) 100%);
-}
-
-/* Open frame: the hovered/focused one, or the lead when none is */
-.member:hover,
-.member:focus-visible,
-.cast-strip:not(:hover):not(:focus-within) .member:first-child {
-  flex-grow: 4.2;
-}
-
-.member:hover img,
-.member:focus-visible img,
-.cast-strip:not(:hover):not(:focus-within) .member:first-child img {
-  filter: none;
-  transform: scale(1);
 }
 
 .member-num {
@@ -1551,9 +1547,14 @@ h2 em {
   line-height: 1;
   color: rgba(239, 233, 223, 0.8);
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+  transition: color 0.4s ease;
 }
 
-/* Closed frames show their Urdu name running up the frame */
+.member.open .member-num {
+  color: var(--accent);
+}
+
+/* Closed frames show their Urdu name */
 .member-ur {
   position: absolute;
   left: 50%;
@@ -1565,6 +1566,10 @@ h2 em {
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.6);
   transform: translateX(-50%);
   transition: opacity 0.4s ease;
+}
+
+.member.open .member-ur {
+  opacity: 0;
 }
 
 .member-name {
@@ -1583,66 +1588,78 @@ h2 em {
   transition: opacity 0.4s ease, transform 0.6s var(--ease-out);
 }
 
-.member:hover .member-name,
-.member:focus-visible .member-name,
-.cast-strip:not(:hover):not(:focus-within) .member:first-child .member-name {
+.member.open .member-name {
   opacity: 1;
   transform: none;
   transition-delay: 0.25s;
 }
 
-.member:hover .member-ur,
-.member:focus-visible .member-ur,
-.cast-strip:not(:hover):not(:focus-within) .member:first-child .member-ur {
-  opacity: 0;
-}
-
-.member:hover .member-num,
-.member:focus-visible .member-num,
-.cast-strip:not(:hover):not(:focus-within) .member:first-child .member-num {
-  color: var(--accent);
-}
-
-/* Phones: a swipeable row of frames, each showing its name */
+/* Phones and touch screens: a vertical stack of letterboxed slices. Each
+   closed slice shows a band of the face with both names; the open one
+   grows into the full close-up. */
 @media (max-width: 760px), (hover: none) {
   .cast-strip {
     height: auto;
-    padding: 0 20px 8px;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    padding: 0 20px;
+    flex-direction: column;
+    gap: 6px;
   }
-  .cast-strip::-webkit-scrollbar {
-    display: none;
+  .member {
+    flex: none;
+    height: 64px;
   }
-  .member,
-  .member:hover,
-  .cast-strip:not(:hover):not(:focus-within) .member:first-child {
-    flex: 0 0 62%;
-    aspect-ratio: 3 / 4;
-    scroll-snap-align: start;
+  .member.open {
+    height: min(108vw, 440px);
   }
   .member img {
-    filter: grayscale(0.2) brightness(0.9);
+    object-position: 50% 28%;
+  }
+  .member-shade {
+    background: linear-gradient(90deg, rgba(10, 9, 8, 0.75), rgba(10, 9, 8, 0.1) 60%, rgba(10, 9, 8, 0.6));
+  }
+  .member.open .member-shade {
+    background: linear-gradient(180deg, rgba(10, 9, 8, 0) 50%, rgba(10, 9, 8, 0.85) 100%);
+  }
+  .member-num {
+    top: 50%;
+    left: 16px;
+    font-size: 20px;
+    transform: translateY(-50%);
+  }
+  .member.open .member-num {
+    top: 16px;
+    transform: none;
+  }
+  .member-name {
+    left: 54px;
+    right: 70px;
+    bottom: auto;
+    top: 50%;
+    font-size: 21px;
+    opacity: 1;
+    transform: translateY(-50%);
+    transition: top 0.6s var(--ease-out), font-size 0.6s var(--ease-out);
+  }
+  .member.open .member-name {
+    left: 18px;
+    top: auto;
+    bottom: 18px;
+    font-size: 28px;
+    white-space: normal;
     transform: none;
   }
   .member-ur {
-    top: 12px;
-    bottom: auto;
     left: auto;
-    right: 14px;
-    font-size: 17px;
-    transform: none;
-    opacity: 1 !important;
-  }
-  .member-name {
-    left: 16px;
     right: 16px;
-    font-size: 22px;
-    white-space: normal;
-    opacity: 1;
+    top: 50%;
+    bottom: auto;
+    font-size: 17px;
+    transform: translateY(-50%);
+  }
+  .member.open .member-ur {
+    top: 16px;
     transform: none;
+    opacity: 1;
   }
 }
 
