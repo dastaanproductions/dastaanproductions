@@ -125,7 +125,7 @@ function Statement() {
   return (
     <section className="statement" aria-label="About Dastaan Productions">
       <p className="overline">Dastaan Productions</p>
-      <Manifesto text="A video, podcast and photography studio for creators, brands and agencies. We turn raw footage into stories people finish, cut for rhythm, for feeling, for the moment your audience leans in." />
+      <Manifesto text="We turn raw footage into stories people finish." />
     </section>
   );
 }
@@ -134,7 +134,7 @@ function Reels({ onOpen }) {
   const loop = [...reels, ...reels];
   return (
     <section id="work" className="work">
-      <Heading over="Selected work" ur="ہمارا کام" intro="Recent reels and shorts. Tap one to watch it.">
+      <Heading over="Selected work" ur="ہمارا کام">
         Work that <em>speaks for itself.</em>
       </Heading>
       <div className="strip">
@@ -179,9 +179,9 @@ function Services() {
 
 function Process() {
   const steps = [
-    { n: 'I', title: 'Brief', text: 'Tell us about the project, share the footage, and we agree on style, length and deadline.' },
-    { n: 'II', title: 'First cut', text: 'You receive a first version to react to, and you leave notes right on the timeline.' },
-    { n: 'III', title: 'Polish & delivery', text: 'We refine until it is right, then deliver in every format and size you need.' },
+    { n: 'I', title: 'Brief', text: 'Share the footage, agree the style.' },
+    { n: 'II', title: 'First cut', text: 'Leave notes right on the timeline.' },
+    { n: 'III', title: 'Polish & delivery', text: 'Every format and size you need.' },
   ];
   return (
     <section id="process" className="process">
@@ -204,7 +204,7 @@ function Process() {
 function Photography() {
   return (
     <section id="photography" className="photography">
-      <Heading over="Photography" ur="عکاسی" intro="Product, portrait, street and wedding photography.">
+      <Heading over="Photography" ur="عکاسی">
         Through the <em>lens.</em>
       </Heading>
       <div className="photo-grid">
@@ -370,9 +370,7 @@ export default function Home() {
         </p>
         <p className="interlude-line">
           Dastaan means <em>story.</em>
-        </p>
-        <p className="interlude-sub">Everyone has one. We help you tell yours.</p>
-      </Interlude>
+        </p>      </Interlude>
       <Contact />
       <VideoModal video={playing} onClose={() => setPlaying(null)} />
     </main>

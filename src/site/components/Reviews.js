@@ -61,7 +61,7 @@ export default function Reviews({ items, hold = 8000 }) {
                   ))}
                 </span>
               )}
-              <span className="review-client">{r.client}</span>
+              {r.client && <span className="review-client">{r.client}</span>}
               {r.project && <span className="review-project">{r.project}</span>}
             </figcaption>
           </figure>

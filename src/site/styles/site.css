@@ -672,10 +672,11 @@ h2 em {
 
 .manifesto {
   margin: 0;
+  max-width: 900px;
   font-family: var(--f-title);
   font-weight: 300;
-  font-size: clamp(30px, 4.4vw, 60px);
-  line-height: 1.18;
+  font-size: clamp(38px, 6vw, 88px);
+  line-height: 1.05;
   letter-spacing: -0.005em;
 }
 
@@ -1167,12 +1168,27 @@ h2 em {
   transition: color 0.4s ease;
 }
 
+/* Descriptions stay out of the way until a row is hovered */
 .service-row p {
   margin: 0;
   max-width: 420px;
   font-size: 15px;
   font-weight: 300;
   color: var(--muted);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.5s ease, transform 0.6s var(--ease-out);
+}
+
+.service-row:hover p {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: none), (max-width: 760px) {
+  .service-row p {
+    display: none;
+  }
 }
 
 @media (hover: hover) {
