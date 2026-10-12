@@ -19,17 +19,13 @@ import VideoCard from '../components/VideoCard';
 import VideoModal from '../components/VideoModal';
 import { reels } from '../data/videos';
 import { clients, team, photos, services, contact } from '../data/siteInfo';
+import { scrollToId } from '../scroll';
 
 const serviceIcons = { film: FaFilm, mic: FaMicrophone, phone: FaMobileAlt, camera: FaCamera };
 const socialIcons = { instagram: FaInstagram, facebook: FaFacebook, behance: FaBehance };
 
 const tilts = [-4, 2, -2, 3, -3, 2, -3, 2];
 const lifts = [14, -6, 10, -10, 12, -8, 10, -6];
-
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
-}
 
 function Hero() {
   return (

@@ -230,8 +230,8 @@ h2 em {
 
 .nav-toggle {
   display: none;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: transparent;
@@ -410,7 +410,9 @@ h2 em {
 }
 
 .marquee:hover .marquee-track,
-.strip:hover .strip-track {
+.strip:hover .strip-track,
+.marquee:focus-within .marquee-track,
+.strip:focus-within .strip-track {
   animation-play-state: paused;
 }
 

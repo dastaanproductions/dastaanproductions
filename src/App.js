@@ -5,6 +5,7 @@ import Footer from './site/components/Footer';
 import WhatsAppFloat from './site/components/WhatsAppFloat';
 import Home from './site/pages/Home';
 import Work from './site/pages/Work';
+import { scrollToEl } from './site/scroll';
 import './site/styles/site.css';
 
 // Scrolls to the top on a new page, or to a section when asked to.
@@ -14,8 +15,7 @@ function ScrollManager() {
     const target = location.state && location.state.scrollTo;
     if (target) {
       const timer = setTimeout(() => {
-        const el = document.getElementById(target);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        scrollToEl(document.getElementById(target));
       }, 60);
       return () => clearTimeout(timer);
     }
