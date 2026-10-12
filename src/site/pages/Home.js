@@ -18,6 +18,7 @@ import Timecode from '../components/Timecode';
 import HeroReel from '../components/HeroReel';
 import Manifesto from '../components/Manifesto';
 import ServiceList from '../components/ServiceList';
+import Interlude from '../components/Interlude';
 import { reels, thumbUrl } from '../data/videos';
 import { clients, team, photos, services, contact } from '../data/siteInfo';
 import { scrollToId } from '../scroll';
@@ -25,6 +26,8 @@ import { scrollToId } from '../scroll';
 import stillTungsten from '../../Components/aboutImage.jpg';
 import stillTeal from '../../Components/homeImage1.jpg';
 import stillSunset from '../../Components/homeImage.jpg';
+import behindTheLens from '../../Components/cinematic/behind-the-lens.jpg';
+import dastaanPortrait from '../../Components/cinematic/dastaan-portrait.jpg';
 
 const socialIcons = { instagram: FaInstagram, facebook: FaFacebook, behance: FaBehance };
 
@@ -240,13 +243,12 @@ function Team() {
             href={m.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`${m.name}, ${m.role} (opens Instagram)`}
+            aria-label={`${m.name} (opens Instagram)`}
           >
             <span className="member-photo">
               <img src={m.img} alt="" loading="lazy" />
             </span>
             <h3>{m.name}</h3>
-            <p>{m.role}</p>
           </Reveal>
         ))}
       </div>
@@ -340,12 +342,36 @@ export default function Home() {
     <main>
       <Hero />
       <Statement />
+      <Interlude
+        image={behindTheLens}
+        alt="A photographer checks his camera on a misty roadside"
+        position="50% 42%"
+      >
+        <p className="overline">Behind the lens</p>
+        <p className="interlude-line">
+          Every frame starts with <em>someone paying attention.</em>
+        </p>
+      </Interlude>
       <Reels onOpen={setPlaying} />
       <Clients />
       <Services />
       <Process />
       <Photography />
       <Team />
+      <Interlude
+        image={dastaanPortrait}
+        alt="Black-and-white portrait of a smiling boy holding a cane"
+        variant="split"
+        position="50% 30%"
+      >
+        <p className="interlude-urdu" lang="ur" dir="rtl">
+          داستان
+        </p>
+        <p className="interlude-line">
+          Dastaan means <em>story.</em>
+        </p>
+        <p className="interlude-sub">Everyone has one. We help you tell yours.</p>
+      </Interlude>
       <Contact />
       <VideoModal video={playing} onClose={() => setPlaying(null)} />
     </main>

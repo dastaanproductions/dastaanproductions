@@ -639,6 +639,170 @@ h2 em {
   color: var(--text);
 }
 
+/* ── Interludes (one photograph, drifting) ───── */
+.interlude {
+  position: relative;
+  --p: 0;
+}
+
+.interlude-frame {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.interlude-frame img {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.interlude-line {
+  margin: 0;
+  font-family: var(--f-title);
+  font-weight: 300;
+  font-size: clamp(36px, 5.2vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+.interlude-line em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.interlude-sub {
+  margin: 0;
+  max-width: 380px;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.interlude-urdu {
+  align-self: flex-start;
+  margin: 0;
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Noto Naskh Arabic', serif;
+  font-size: 30px;
+  line-height: 1.6;
+  color: var(--accent);
+}
+
+/* Full-bleed: the photo fills a widescreen frame, words sit in the sky */
+.interlude-full .interlude-frame {
+  height: min(92vh, 860px);
+  min-height: 480px;
+}
+
+.interlude-full .interlude-frame img {
+  top: -12%;
+  height: 124%;
+  transform: translateY(calc(var(--p) * -6%)) scale(calc(1.06 - var(--p) * 0.04));
+  filter: saturate(0.9) contrast(1.05);
+}
+
+/* Cinemascope matte and grade */
+.interlude-full .interlude-frame::before,
+.interlude-full .interlude-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.interlude-full .interlude-frame::before {
+  background:
+    linear-gradient(180deg, var(--bg) 0%, rgba(10, 9, 8, 0) 22%, rgba(10, 9, 8, 0) 70%, var(--bg) 100%),
+    radial-gradient(ellipse 75% 70% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.interlude-full .interlude-text {
+  position: absolute;
+  z-index: 2;
+  top: 14%;
+  left: 0;
+  right: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+}
+
+.interlude-full .interlude-line {
+  max-width: 560px;
+}
+
+/* On wide screens the (portrait) photo sits to the right and fades into
+   black on its left, leaving dark space for the words */
+@media (min-width: 861px) {
+  .interlude-full .interlude-frame img {
+    left: auto;
+    right: 0;
+    width: min(64%, 900px);
+  }
+  .interlude-full .interlude-frame::after {
+    background: linear-gradient(90deg, var(--bg) 0%, var(--bg) calc(100% - min(64%, 900px)), rgba(10, 9, 8, 0.85) calc(100% - min(64%, 900px) + 80px), rgba(10, 9, 8, 0) calc(100% - min(64%, 900px) + 320px));
+  }
+  .interlude-full .interlude-text {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .interlude-full .interlude-line {
+    max-width: 480px;
+  }
+}
+
+/* Split: a tall portrait beside the words */
+.interlude-split {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 150px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 72px;
+}
+
+.interlude-split .interlude-frame {
+  order: 2;
+  aspect-ratio: 4 / 5;
+  max-height: 86vh;
+  justify-self: end;
+  width: 100%;
+}
+
+.interlude-split .interlude-frame img {
+  top: 0;
+  height: 100%;
+  transform: scale(calc(1.12 - (var(--p) + 1) * 0.06));
+}
+
+.interlude-split .interlude-text {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 860px) {
+  .interlude-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 120px;
+  }
+  .interlude-split .interlude-frame {
+    order: 0;
+  }
+  .interlude-full .interlude-text {
+    top: 10%;
+  }
+}
+
 /* ── Reels strip ─────────────────────────────── */
 .work {
   padding: 40px 0 130px;
@@ -1175,14 +1339,6 @@ h2 em {
   line-height: 1.15;
 }
 
-.member p {
-  margin: 6px 0 0;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
 
 /* ── Contact ─────────────────────────────────── */
 .contact {

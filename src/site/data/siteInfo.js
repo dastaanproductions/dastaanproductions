@@ -7,7 +7,7 @@ import cari from '../../Components/clientImages/cari.png';
 import conceal from '../../Components/clientImages/conceal.jpg';
 import roshni from '../../Components/clientImages/roshni.png';
 
-import member1 from '../../Components/teamImages/member1.jpg';
+import member1 from '../../Components/teamImages/syed-ali-gilani.jpg';
 import member2 from '../../Components/teamImages/member2.jpg';
 import member3 from '../../Components/teamImages/member3.jpg';
 import member4 from '../../Components/teamImages/member4.jpg';
