@@ -3,88 +3,129 @@ import { Link } from 'react-router-dom';
 import {
   FaWhatsapp,
   FaPlay,
-  FaFilm,
-  FaMicrophone,
-  FaMobileAlt,
-  FaCamera,
   FaInstagram,
   FaFacebook,
   FaBehance,
   FaEnvelope,
   FaPhoneAlt,
   FaMapMarkerAlt,
+  FaArrowRight,
 } from 'react-icons/fa';
 import Reveal from '../components/Reveal';
 import VideoCard from '../components/VideoCard';
 import VideoModal from '../components/VideoModal';
-import { reels } from '../data/videos';
-import { clients, team, photos, services, contact } from '../data/siteInfo';
+import Timecode from '../components/Timecode';
+import HeroReel from '../components/HeroReel';
+import Manifesto from '../components/Manifesto';
+import ServiceList from '../components/ServiceList';
+import Interlude from '../components/Interlude';
+import { reels, thumbUrl } from '../data/videos';
+import { team, photos, services, contact } from '../data/siteInfo';
+import { reviews } from '../data/reviews';
+import Reviews from '../components/Reviews';
 import { scrollToId } from '../scroll';
 
-const serviceIcons = { film: FaFilm, mic: FaMicrophone, phone: FaMobileAlt, camera: FaCamera };
+import stillTungsten from '../../Components/aboutImage.jpg';
+import stillTeal from '../../Components/homeImage1.jpg';
+import stillSunset from '../../Components/homeImage.jpg';
+import behindTheLens from '../../Components/cinematic/behind-the-lens.jpg';
+import dastaanPortrait from '../../Components/cinematic/dastaan-portrait.jpg';
+
 const socialIcons = { instagram: FaInstagram, facebook: FaFacebook, behance: FaBehance };
 
-const tilts = [-4, 2, -2, 3, -3, 2, -3, 2];
-const lifts = [14, -6, 10, -10, 12, -8, 10, -6];
+const heroFrames = [
+  { src: behindTheLens, fit: 'portrait', origin: '50% 45%', position: '50% 40%' },
+  { src: stillTungsten, origin: '30% 55%' },
+  { src: stillTeal, origin: '55% 40%' },
+  { src: stillSunset, origin: '65% 50%' },
+];
+
+// Preview stills for the service rows, in the same order as `services`.
+const servicePreviews = [stillTeal, thumbUrl('o3gUbbbYLvI'), thumbUrl(reels[3].id), photos[5].src];
+
+const tilts = [-3, 2, -2, 3, -2, 2, -3, 2];
+const lifts = [12, -6, 10, -8, 12, -6, 10, -6];
+
+// Lets the hero's "projector light" follow the pointer.
+function trackLight(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--lx', `${((e.clientX - r.left) / r.width) * 100}%`);
+  e.currentTarget.style.setProperty('--ly', `${((e.clientY - r.top) / r.height) * 100}%`);
+}
+
+// The same label in Urdu, set beside its English overline.
+function Urdu({ children, className = '' }) {
+  return (
+    <span className={`urdu ${className}`} lang="ur" dir="rtl">
+      {children}
+    </span>
+  );
+}
+
+// Quiet section heading: a credit-style overline (with its Urdu twin) and a serif title.
+function Heading({ over, ur, children, intro, center = false }) {
+  return (
+    <Reveal className={`heading ${center ? 'center-text' : ''}`}>
+      <p className="overline overline-pair">
+        <span>{over}</span>
+        {ur && <Urdu>{ur}</Urdu>}
+      </p>
+      <h2>{children}</h2>
+      {intro && <p className="heading-intro">{intro}</p>}
+    </Reveal>
+  );
+}
 
 function Hero() {
   return (
-    <section id="home" className="hero">
-      <div className="hero-glow" aria-hidden="true" />
+    <section id="home" className="hero" onPointerMove={trackLight}>
+      <HeroReel frames={heroFrames} />
+      <div className="hero-grade" aria-hidden="true" />
+      <div className="hero-light" aria-hidden="true" />
       <div className="hero-inner">
-        <div className="badge fade-up d1">
-          <span className="dot" aria-hidden="true" />
-          Open for new projects
-        </div>
-        <h1 className="fade-up d2">
-          Stories worth watching, <em>cut with care.</em>
+        <p className="overline fade-up d1">Video · Podcast · Photography</p>
+        <h1 className="hero-title">
+          <span className="line">
+            <span>Stories worth</span>
+          </span>{' '}
+          <span className="line">
+            <span>watching,</span>
+          </span>{' '}
+          <span className="line">
+            <em>cut with care.</em>
+          </span>
         </h1>
-        <p className="lead fade-up d3">
-          Dastaan Productions is a video, podcast and photography studio for creators, brands and agencies. We turn
-          raw footage into stories people finish.
-        </p>
-        <div className="hero-actions fade-up d4">
-          <button type="button" className="btn btn-amber" onClick={() => scrollToId('work')}>
-            <FaPlay aria-hidden="true" /> See the work
-          </button>
-          <a
-            className="btn btn-dark"
-            href={`https://wa.me/${contact.whatsapp}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaWhatsapp aria-hidden="true" /> Message on WhatsApp
-          </a>
+        <div className="hero-foot fade-up d3">
+          <div className="hero-actions">
+            <button type="button" className="btn btn-primary" onClick={() => scrollToId('work')}>
+              <FaPlay aria-hidden="true" /> See the work
+            </button>
+            <a
+              className="btn btn-ghost"
+              href={`https://wa.me/${contact.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaWhatsapp aria-hidden="true" /> Message on WhatsApp
+            </a>
+          </div>
+          <p className="hero-status">
+            <span className="rec-dot" aria-hidden="true" />
+            Open for new projects
+            <Timecode className="hero-tc" />
+          </p>
         </div>
       </div>
+      <span className="scroll-cue" aria-hidden="true" />
     </section>
   );
 }
 
-function Clients() {
-  const loop = [...clients, ...clients, ...clients, ...clients];
+function Statement() {
   return (
-    <section id="clients" className="clients">
-      <Reveal>
-        <p className="clients-label">Trusted by brands and teams who care about their story</p>
-      </Reveal>
-      <div className="marquee">
-        <div className="marquee-track">
-          {loop.map((c, i) => (
-            <a
-              key={`${c.name}-${i}`}
-              className="client-tile"
-              href={c.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-hidden={i >= clients.length ? 'true' : undefined}
-              tabIndex={i >= clients.length ? -1 : 0}
-            >
-              <img src={c.img} alt={i < clients.length ? c.name : ''} loading="lazy" />
-            </a>
-          ))}
-        </div>
-      </div>
+    <section className="statement" aria-label="About Dastaan Productions">
+      <p className="overline">Dastaan Productions</p>
+      <Manifesto text="We turn raw footage into stories people finish." />
     </section>
   );
 }
@@ -93,12 +134,9 @@ function Reels({ onOpen }) {
   const loop = [...reels, ...reels];
   return (
     <section id="work" className="work">
-      <Reveal className="section-head">
-        <h2>
-          Work that <em>speaks for itself.</em>
-        </h2>
-        <p>Recent reels and shorts. Tap one to watch it.</p>
-      </Reveal>
+      <Heading over="Selected work" ur="ہمارا کام">
+        Work that <em>speaks for itself.</em>
+      </Heading>
       <div className="strip">
         <div className="strip-track">
           {loop.map((v, i) => {
@@ -117,60 +155,48 @@ function Reels({ onOpen }) {
         </div>
       </div>
       <Reveal className="center">
-        <Link to="/work" className="btn btn-dark">View long-form work →</Link>
+        <Link to="/work" className="text-link">
+          View long-form work <FaArrowRight aria-hidden="true" />
+        </Link>
       </Reveal>
     </section>
   );
 }
 
 function Services() {
+  const items = services.map((s, i) => ({ ...s, preview: servicePreviews[i] }));
   return (
     <section id="services" className="services">
-      <Reveal className="section-head">
-        <h2>
-          What we <em>make.</em>
-        </h2>
-        <p>Clean, story-first work across the formats your audience watches.</p>
+      <Heading over="What we make" ur="خدمات">
+        Clean, story-first work <em>in every format.</em>
+      </Heading>
+      <Reveal>
+        <ServiceList items={items} />
       </Reveal>
-      <div className="card-row">
-        {services.map((s, i) => {
-          const Icon = serviceIcons[s.icon];
-          return (
-            <Reveal key={s.title} className="card" delay={i * 90}>
-              <Icon className="card-icon" aria-hidden="true" />
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </Reveal>
-          );
-        })}
-      </div>
     </section>
   );
 }
 
 function Process() {
   const steps = [
-    { n: '01', title: 'Brief', text: 'Tell us about the project, share the footage, and we agree on style, length and deadline.' },
-    { n: '02', title: 'First cut', text: 'You receive a first version to react to, and you leave notes right on the timeline.' },
-    { n: '03', title: 'Polish & delivery', text: 'We refine until it is right, then deliver in every format and size you need.' },
+    { n: 'I', title: 'Brief', text: 'Share the footage, agree the style.' },
+    { n: 'II', title: 'First cut', text: 'Leave notes right on the timeline.' },
+    { n: 'III', title: 'Polish & delivery', text: 'Every format and size you need.' },
   ];
   return (
     <section id="process" className="process">
-      <Reveal className="section-head">
-        <p className="eyebrow">No friction, from day one</p>
-        <h2>
-          A simple process, <em>handled end to end.</em>
-        </h2>
-      </Reveal>
-      <div className="card-row">
+      <Heading over="No friction, from day one" ur="طریقہ کار">
+        A simple process, <em>handled end to end.</em>
+      </Heading>
+      <Reveal as="ol" className="process-track">
         {steps.map((s, i) => (
-          <Reveal key={s.n} className="card" delay={i * 90}>
+          <li key={s.n} className="step" style={{ '--i': i }}>
             <span className="step-num">{s.n}</span>
             <h3>{s.title}</h3>
             <p>{s.text}</p>
-          </Reveal>
+          </li>
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -178,15 +204,12 @@ function Process() {
 function Photography() {
   return (
     <section id="photography" className="photography">
-      <Reveal className="section-head">
-        <h2>
-          Through the <em>lens.</em>
-        </h2>
-        <p>Product, portrait, street and wedding photography.</p>
-      </Reveal>
+      <Heading over="Photography" ur="عکاسی">
+        Through the <em>lens.</em>
+      </Heading>
       <div className="photo-grid">
         {photos.map((p, i) => (
-          <Reveal key={p.src} className="photo" delay={(i % 4) * 80}>
+          <Reveal key={p.src} className={`photo photo-${i + 1}`} delay={(i % 4) * 110}>
             <img src={p.src} alt={p.caption} loading="lazy" />
             <span className="photo-caption">{p.caption}</span>
           </Reveal>
@@ -196,34 +219,37 @@ function Photography() {
   );
 }
 
+// The team as a strip of film frames: narrow black-and-white slices that
+// open into a full colour close-up when hovered or focused.
+function Member({ m, n }) {
+  const Tag = m.instagram ? 'a' : 'div';
+  const link = m.instagram
+    ? { href: m.instagram, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${m.name} (opens Instagram)` }
+    : { tabIndex: 0, 'aria-label': m.name };
+  return (
+    <Tag className="member" {...link}>
+      <img src={m.img} alt="" loading="lazy" />
+      <span className="member-shade" aria-hidden="true" />
+      <span className="member-num" aria-hidden="true">
+        {String(n + 1).padStart(2, '0')}
+      </span>
+      {m.ur && <Urdu className="member-ur">{m.ur}</Urdu>}
+      <h3 className="member-name">{m.name}</h3>
+    </Tag>
+  );
+}
+
 function Team() {
   return (
     <section id="team" className="team">
-      <Reveal className="section-head">
-        <h2>
-          The people <em>behind it.</em>
-        </h2>
-      </Reveal>
-      <div className="team-grid">
-        {team.map((m, i) => (
-          <Reveal
-            as="a"
-            key={m.name}
-            className="member"
-            delay={i * 80}
-            href={m.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${m.name}, ${m.role} (opens Instagram)`}
-          >
-            <img src={m.img} alt="" loading="lazy" />
-            <div className="member-info">
-              <h3>{m.name}</h3>
-              <p>{m.role}</p>
-            </div>
-          </Reveal>
+      <Heading over="The cast" ur="ہماری ٹیم">
+        The people <em>behind it.</em>
+      </Heading>
+      <Reveal className="cast-strip">
+        {team.map((m, n) => (
+          <Member key={m.name} m={m} n={n} />
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -248,13 +274,10 @@ function Contact() {
   return (
     <section id="contact" className="contact">
       <div className="contact-glow" aria-hidden="true" />
-      <Reveal className="section-head">
-        <p className="eyebrow">Ready when you are</p>
-        <h2>
-          Have a story to tell? <em>Let's cut it together.</em>
-        </h2>
-      </Reveal>
-      <Reveal className="contact-card">
+      <Heading over="Ready when you are" ur="رابطہ" center>
+        Have a story to tell? <em>Let's cut it together.</em>
+      </Heading>
+      <Reveal className="contact-body">
         <div className="contact-info">
           <a className="info-row" href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener noreferrer">
             <FaWhatsapp aria-hidden="true" />
@@ -289,7 +312,7 @@ function Contact() {
               const Icon = socialIcons[s.key];
               return (
                 <a key={s.key} href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
-                  <Icon />
+                  <Icon aria-hidden="true" />
                 </a>
               );
             })}
@@ -297,12 +320,14 @@ function Contact() {
         </div>
         <form className="contact-form" onSubmit={submit}>
           <label htmlFor="c-name">Name</label>
-          <input id="c-name" name="name" type="text" value={form.name} onChange={update} required />
+          <input id="c-name" name="name" type="text" autoComplete="name" value={form.name} onChange={update} required />
           <label htmlFor="c-email">Email</label>
-          <input id="c-email" name="email" type="email" value={form.email} onChange={update} required />
+          <input id="c-email" name="email" type="email" autoComplete="email" value={form.email} onChange={update} required />
           <label htmlFor="c-message">Tell us about your project</label>
-          <textarea id="c-message" name="message" rows="5" value={form.message} onChange={update} required />
-          <button type="submit" className="btn btn-amber">Send message</button>
+          <textarea id="c-message" name="message" rows="4" value={form.message} onChange={update} required />
+          <button type="submit" className="btn btn-primary">
+            Send message <FaArrowRight aria-hidden="true" className="btn-arrow" />
+          </button>
         </form>
       </Reveal>
     </section>
@@ -314,12 +339,38 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Clients />
+      <Statement />
+      <Interlude
+        image={behindTheLens}
+        alt="A photographer checks his camera on a misty roadside"
+        position="50% 42%"
+      >
+        <p className="overline overline-pair">
+          <span>Behind the lens</span>
+          <Urdu>کیمرے کے پیچھے</Urdu>
+        </p>
+        <p className="interlude-line">
+          Every frame starts with <em>someone paying attention.</em>
+        </p>
+      </Interlude>
       <Reels onOpen={setPlaying} />
+      {reviews.length > 0 && <Reviews items={reviews} />}
       <Services />
       <Process />
       <Photography />
       <Team />
+      <Interlude
+        image={dastaanPortrait}
+        alt="Black-and-white portrait of a smiling boy holding a cane"
+        variant="split"
+        position="50% 30%"
+      >
+        <p className="interlude-urdu" lang="ur" dir="rtl">
+          داستان
+        </p>
+        <p className="interlude-line">
+          Dastaan means <em>story.</em>
+        </p>      </Interlude>
       <Contact />
       <VideoModal video={playing} onClose={() => setPlaying(null)} />
     </main>

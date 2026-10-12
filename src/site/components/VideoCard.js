@@ -38,7 +38,7 @@ export default function VideoCard({ video, variant, onOpen, style, decorative = 
       <img src={showGif ? gif : thumb} alt="" loading="lazy" onError={handleError} />
       <span className="vcard-shade" />
       <span className="vcard-play">
-        <FaPlay />
+        <FaPlay aria-hidden="true" />
       </span>
       <span className="vcard-title">{video.title}</span>
     </button>

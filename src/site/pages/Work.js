@@ -17,9 +17,14 @@ export default function Work() {
       <section className="page-hero">
         <div className="hero-glow" aria-hidden="true" />
         <div className="hero-inner">
-          <p className="eyebrow fade-up d1">Long-form work</p>
-          <h1 className="fade-up d2">
-            Every story, <em>every format.</em>
+          <p className="overline fade-up d1">Long-form work</p>
+          <h1 className="hero-title">
+            <span className="line">
+              <span>Every story,</span>
+            </span>{' '}
+            <span className="line">
+              <em>every format.</em>
+            </span>
           </h1>
           <p className="lead fade-up d3">Full-length edits, grouped by the kind of project. Pick a category to jump to it.</p>
           <div className="pills fade-up d4">
@@ -27,7 +32,7 @@ export default function Work() {
               <button
                 key={c.id}
                 type="button"
-                className={`pill ${i === 0 ? 'pill-on' : ''}`}
+                className="pill"
                 onClick={() => jump(c.id)}
               >
                 {c.title}
@@ -61,7 +66,7 @@ export default function Work() {
           <h2>
             Have a story to tell? <em>Let's cut it together.</em>
           </h2>
-          <Link to="/" state={{ scrollTo: 'contact' }} className="btn btn-amber">Start a project</Link>
+          <Link to="/" state={{ scrollTo: 'contact' }} className="btn btn-primary">Start a project</Link>
         </Reveal>
       </section>
 
