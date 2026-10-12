@@ -20,7 +20,9 @@ import Manifesto from '../components/Manifesto';
 import ServiceList from '../components/ServiceList';
 import Interlude from '../components/Interlude';
 import { reels, thumbUrl } from '../data/videos';
-import { clients, team, photos, services, contact } from '../data/siteInfo';
+import { team, photos, services, contact } from '../data/siteInfo';
+import { reviews } from '../data/reviews';
+import Reviews from '../components/Reviews';
 import { scrollToId } from '../scroll';
 import useScrollProgress from '../useScrollProgress';
 
@@ -129,32 +131,6 @@ function Statement() {
   );
 }
 
-function Clients() {
-  const loop = [...clients, ...clients, ...clients, ...clients];
-  return (
-    <section id="clients" className="clients">
-      <p className="overline center-text">Trusted by</p>
-      <div className="marquee">
-        <div className="marquee-track">
-          {loop.map((c, i) => (
-            <a
-              key={`${c.name}-${i}`}
-              className="client-tile"
-              href={c.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-hidden={i >= clients.length ? 'true' : undefined}
-              tabIndex={i >= clients.length ? -1 : 0}
-            >
-              <img src={c.img} alt={i < clients.length ? c.name : ''} loading="lazy" />
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Reels({ onOpen }) {
   const loop = [...reels, ...reels];
   return (
@@ -246,18 +222,17 @@ function Photography() {
 
 // The team as a film's cast: a large lead frame, then two offset columns
 // that drift at different speeds as you scroll.
-const castColumns = [[0], [1, 3], [2, 4]];
+const castColumns = [[0, 5], [1, 3], [2, 4]];
 
 function Member({ m, n, lead = false }) {
+  const link = m.instagram
+    ? { as: 'a', href: m.instagram, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${m.name} (opens Instagram)` }
+    : { as: 'div' };
   return (
     <Reveal
-      as="a"
+      {...link}
       className={`member ${lead ? 'member-lead' : ''}`}
       delay={(n % 3) * 120}
-      href={m.instagram}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${m.name} (opens Instagram)`}
       style={{ order: n }}
     >
       <span className="member-photo">
@@ -393,7 +368,7 @@ export default function Home() {
         </p>
       </Interlude>
       <Reels onOpen={setPlaying} />
-      <Clients />
+      {reviews.length > 0 && <Reviews items={reviews} />}
       <Services />
       <Process />
       <Photography />

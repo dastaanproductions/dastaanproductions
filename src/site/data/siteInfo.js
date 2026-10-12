@@ -7,11 +7,13 @@ import cari from '../../Components/clientImages/cari.png';
 import conceal from '../../Components/clientImages/conceal.jpg';
 import roshni from '../../Components/clientImages/roshni.png';
 
-import member1 from '../../Components/teamImages/syed-ali-gilani.jpg';
-import member2 from '../../Components/teamImages/member2.jpg';
-import member3 from '../../Components/teamImages/member3.jpg';
-import member4 from '../../Components/teamImages/member4.jpg';
-import member5 from '../../Components/teamImages/member5.jpg';
+// Team portraits are head-and-shoulders close-ups at 3:4.
+import aliImg from '../../Components/teamImages/syed-ali-gilani.jpg';
+import hashimImg from '../../Components/teamImages/hashim-ali.jpg';
+import ahmadImg from '../../Components/teamImages/ahmad-khattak.jpg';
+import atharImg from '../../Components/teamImages/syed-athar-abbas-gilani.jpg';
+import qasimImg from '../../Components/teamImages/qasim-ali.jpg';
+import ahsanImg from '../../Components/teamImages/ahsan.jpg';
 
 import work1 from '../../Components/workImages/image1.jpg';
 import work2 from '../../Components/workImages/image2.jpg';
@@ -44,11 +46,13 @@ export const clients = [
 ];
 
 export const team = [
-  { name: 'Syed Ali Gilani', ur: 'سید علی گیلانی', role: 'CEO', img: member1, instagram: 'https://www.instagram.com/gilani.jpg/' },
-  { name: 'Hashim Ali', ur: 'ہاشم علی', role: 'Managing Director', img: member2, instagram: 'https://www.instagram.com/thisishashimali/' },
-  { name: 'Ahmad Khattak', ur: 'احمد خٹک', role: 'Cinematographer', img: member3, instagram: 'https://www.instagram.com/thisiskhattak/' },
-  { name: 'Syed Athar Abbas Gilani', ur: 'سید اطہر عباس گیلانی', role: 'Senior Editor', img: member4, instagram: 'https://www.instagram.com/its_syed_athar_bbas/' },
-  { name: 'Qasim Ali', ur: 'قاسم علی', role: 'Senior Editor', img: member5, instagram: 'https://www.instagram.com/_qasim_ali_56?igsh=ZWc2c2owbWt5ZHV6' },
+  { name: 'Syed Ali Gilani', ur: 'علی', role: 'CEO', img: aliImg, instagram: 'https://www.instagram.com/gilani.jpg/' },
+  { name: 'Hashim Ali', ur: 'ہاشم', role: 'Managing Director', img: hashimImg, instagram: 'https://www.instagram.com/thisishashimali/' },
+  { name: 'Ahmad Khattak', ur: 'احمد', role: 'Cinematographer', img: ahmadImg, instagram: 'https://www.instagram.com/thisiskhattak/' },
+  { name: 'Syed Athar Abbas Gilani', ur: 'اطہر', role: 'Senior Editor', img: atharImg, instagram: 'https://www.instagram.com/its_syed_athar_bbas/' },
+  { name: 'Qasim Ali', ur: 'قاسم', role: 'Senior Editor', img: qasimImg, instagram: 'https://www.instagram.com/_qasim_ali_56?igsh=ZWc2c2owbWt5ZHV6' },
+  // Add Ahsan's Instagram link here to make his card clickable
+  { name: 'Ahsan', ur: 'احسن', img: ahsanImg },
 ];
 
 export const photos = [

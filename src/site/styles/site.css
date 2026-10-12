@@ -1004,46 +1004,124 @@ h2 em {
   display: none;
 }
 
-/* ── Clients ─────────────────────────────────── */
-.clients {
-  padding: 0 0 150px;
+/* ── Client reviews (one at a time, crossfading) ── */
+.reviews {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px 150px;
 }
 
-.clients .overline {
-  margin-bottom: 30px;
+.reviews-head {
+  margin-bottom: 40px;
 }
 
-.marquee-track {
-  animation: slideX 46s linear infinite;
+/* Every review sits in the same grid cell so the stage takes the
+   height of the longest one and nothing jumps as they change */
+.reviews-stage {
+  display: grid;
 }
 
-.client-tile {
-  flex: 0 0 150px;
-  height: 76px;
-  margin-right: 14px;
-  padding: 12px;
-  border-radius: 4px;
-  background: var(--text);
+.review {
+  grid-area: 1 / 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: opacity 1.2s ease, transform 1.4s var(--ease-out), visibility 0s linear 1.2s;
+}
+
+.review.on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 1.2s ease 0.3s, transform 1.4s var(--ease-out) 0.3s, visibility 0s;
+}
+
+.review-mark {
+  height: 0.5em;
+  font-family: var(--f-title);
+  font-size: 120px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.review blockquote {
+  margin: 0;
+  font-family: var(--f-title);
+  font-weight: 300;
+  font-size: clamp(26px, 3.4vw, 44px);
+  line-height: 1.25;
+}
+
+.review figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+
+.review-stars {
+  display: inline-flex;
+  gap: 3px;
+  font-size: 12px;
+  color: var(--line-strong);
+}
+
+.review-stars .lit {
+  color: var(--accent);
+}
+
+.review-client {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.review-project {
+  padding-left: 18px;
+  border-left: 1px solid var(--line-strong);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.reviews-controls {
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.reviews-controls button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: grayscale(1);
-  opacity: 0.45;
-  transition: filter 0.5s ease, opacity 0.5s ease;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
 }
 
-.client-tile:hover,
-.client-tile:focus-visible {
-  filter: none;
-  opacity: 1;
+.reviews-controls button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-.client-tile img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.reviews-count {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── Services (list with floating preview) ───── */
