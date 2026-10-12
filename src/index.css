@@ -1,14 +1,28 @@
-/* Global reset and colour tokens for the Dastaan Productions site */
+/* Global reset and design tokens for the Dastaan Productions site.
+   Fonts and palette come from the UI/UX Pro Max design system:
+   Archivo (display) + Space Grotesk (body) + JetBrains Mono (labels),
+   warm film-black with a cinema-red accent. */
 :root {
-  --bg: #07070a;
-  --card: #0e0e12;
-  --line: rgba(255, 255, 255, 0.08);
-  --text: #f4f1ea;
-  --soft: #d9d5cb;
-  --muted: #b4afa4;
-  --faint: #8f8b81;
-  --amber: #f2a65a;
-  --ink: #1a1208;
+  --bg: #0b0a09;
+  --bg-2: #11100e;
+  --card: #161412;
+  --line: rgba(242, 237, 228, 0.1);
+  --line-strong: rgba(242, 237, 228, 0.22);
+  --text: #f2ede4;
+  --soft: #d6d0c6;
+  --muted: #a8a097;
+  --faint: #8a837a;
+  /* Red fill for buttons (white text passes 4.5:1); lighter red for text on black */
+  --accent: #d62f33;
+  --accent-text: #ff5a5f;
+  --on-accent: #ffffff;
+
+  --f-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --f-body: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 *,
@@ -25,10 +39,17 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 a {

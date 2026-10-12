@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { scrollToId } from '../scroll';
+import ScrollTimeline from './ScrollTimeline';
 
-// Floating pill menu. Section links scroll on the homepage;
-// from another page they go home first, then scroll.
+// Full-width bar with the scroll timeline along its bottom edge.
+// Section links scroll on the homepage; from another page they go home first, then scroll.
 export default function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,14 +44,16 @@ export default function Nav() {
   );
 
   return (
-    <header className="nav-wrap">
-      <nav className={`nav ${scrolled ? 'scrolled' : ''}`} aria-label="Main">
+    <header className={`nav-wrap ${scrolled ? 'scrolled' : ''}`}>
+      <nav className="nav" aria-label="Main">
         <Link to="/" className="brand" aria-label="Dastaan Productions home">
           <span className="brand-name">Dastaan</span>
-          <span className="brand-sub">PRODUCTIONS</span>
+          <span className="brand-sub">Productions</span>
         </Link>
         <div className="nav-links">{links}</div>
-        <a href="#/" className="btn btn-amber btn-sm nav-cta" onClick={goTo('contact')}>Start a project</a>
+        <a href="#/" className="btn btn-primary btn-sm nav-cta" onClick={goTo('contact')}>
+          Start a project
+        </a>
         <button
           type="button"
           className="nav-toggle"
@@ -61,6 +64,7 @@ export default function Nav() {
           {open ? <FaTimes /> : <FaBars />}
         </button>
       </nav>
+      <ScrollTimeline />
       {open && <div className="nav-sheet">{links}</div>}
     </header>
   );

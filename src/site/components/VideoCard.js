@@ -6,7 +6,7 @@ import { thumbUrl, thumbFallback } from '../data/videos';
 //  - Shows the YouTube thumbnail.
 //  - On hover it swaps to the GIF preview at  public/previews/<slug>.gif
 //    (if that file does not exist, the thumbnail simply stays).
-export default function VideoCard({ video, variant, onOpen, style, decorative = false }) {
+export default function VideoCard({ video, variant, onOpen, style, decorative = false, index }) {
   const [thumb, setThumb] = useState(thumbUrl(video.id));
   const [hover, setHover] = useState(false);
   const [gifOk, setGifOk] = useState(true);
@@ -37,8 +37,9 @@ export default function VideoCard({ video, variant, onOpen, style, decorative = 
     >
       <img src={showGif ? gif : thumb} alt="" loading="lazy" onError={handleError} />
       <span className="vcard-shade" />
+      {index && <span className="vcard-index">#{String(index).padStart(2, '0')}</span>}
       <span className="vcard-play">
-        <FaPlay />
+        <FaPlay aria-hidden="true" />
       </span>
       <span className="vcard-title">{video.title}</span>
     </button>
