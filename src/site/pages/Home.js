@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaWhatsapp,
@@ -22,6 +22,7 @@ import Interlude from '../components/Interlude';
 import { reels, thumbUrl } from '../data/videos';
 import { clients, team, photos, services, contact } from '../data/siteInfo';
 import { scrollToId } from '../scroll';
+import useScrollProgress from '../useScrollProgress';
 
 import stillTungsten from '../../Components/aboutImage.jpg';
 import stillTeal from '../../Components/homeImage1.jpg';
@@ -32,6 +33,7 @@ import dastaanPortrait from '../../Components/cinematic/dastaan-portrait.jpg';
 const socialIcons = { instagram: FaInstagram, facebook: FaFacebook, behance: FaBehance };
 
 const heroFrames = [
+  { src: behindTheLens, fit: 'portrait', origin: '50% 45%', position: '50% 40%' },
   { src: stillTungsten, origin: '30% 55%' },
   { src: stillTeal, origin: '55% 40%' },
   { src: stillSunset, origin: '65% 50%' },
@@ -50,11 +52,23 @@ function trackLight(e) {
   e.currentTarget.style.setProperty('--ly', `${((e.clientY - r.top) / r.height) * 100}%`);
 }
 
-// Quiet section heading: a credit-style overline and a serif title.
-function Heading({ over, children, intro, center = false }) {
+// The same label in Urdu, set beside its English overline.
+function Urdu({ children, className = '' }) {
+  return (
+    <span className={`urdu ${className}`} lang="ur" dir="rtl">
+      {children}
+    </span>
+  );
+}
+
+// Quiet section heading: a credit-style overline (with its Urdu twin) and a serif title.
+function Heading({ over, ur, children, intro, center = false }) {
   return (
     <Reveal className={`heading ${center ? 'center-text' : ''}`}>
-      <p className="overline">{over}</p>
+      <p className="overline overline-pair">
+        <span>{over}</span>
+        {ur && <Urdu>{ur}</Urdu>}
+      </p>
       <h2>{children}</h2>
       {intro && <p className="heading-intro">{intro}</p>}
     </Reveal>
@@ -71,7 +85,10 @@ function Hero() {
         <p className="overline fade-up d1">Video · Podcast · Photography</p>
         <h1 className="hero-title">
           <span className="line">
-            <span>Stories worth watching,</span>
+            <span>Stories worth</span>
+          </span>{' '}
+          <span className="line">
+            <span>watching,</span>
           </span>{' '}
           <span className="line">
             <em>cut with care.</em>
@@ -142,7 +159,7 @@ function Reels({ onOpen }) {
   const loop = [...reels, ...reels];
   return (
     <section id="work" className="work">
-      <Heading over="Selected work" intro="Recent reels and shorts. Tap one to watch it.">
+      <Heading over="Selected work" ur="ہمارا کام" intro="Recent reels and shorts. Tap one to watch it.">
         Work that <em>speaks for itself.</em>
       </Heading>
       <div className="strip">
@@ -175,7 +192,7 @@ function Services() {
   const items = services.map((s, i) => ({ ...s, preview: servicePreviews[i] }));
   return (
     <section id="services" className="services">
-      <Heading over="What we make">
+      <Heading over="What we make" ur="خدمات">
         Clean, story-first work <em>in every format.</em>
       </Heading>
       <Reveal>
@@ -193,7 +210,7 @@ function Process() {
   ];
   return (
     <section id="process" className="process">
-      <Heading over="No friction, from day one">
+      <Heading over="No friction, from day one" ur="طریقہ کار">
         A simple process, <em>handled end to end.</em>
       </Heading>
       <Reveal as="ol" className="process-track">
@@ -212,7 +229,7 @@ function Process() {
 function Photography() {
   return (
     <section id="photography" className="photography">
-      <Heading over="Photography" intro="Product, portrait, street and wedding photography.">
+      <Heading over="Photography" ur="عکاسی" intro="Product, portrait, street and wedding photography.">
         Through the <em>lens.</em>
       </Heading>
       <div className="photo-grid">
@@ -227,29 +244,49 @@ function Photography() {
   );
 }
 
-function Team() {
+// The team as a film's cast: a large lead frame, then two offset columns
+// that drift at different speeds as you scroll.
+const castColumns = [[0], [1, 3], [2, 4]];
+
+function Member({ m, n, lead = false }) {
   return (
-    <section id="team" className="team">
-      <Heading over="The team">
+    <Reveal
+      as="a"
+      className={`member ${lead ? 'member-lead' : ''}`}
+      delay={(n % 3) * 120}
+      href={m.instagram}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${m.name} (opens Instagram)`}
+      style={{ order: n }}
+    >
+      <span className="member-photo">
+        <img src={m.img} alt="" loading="lazy" />
+        <span className="member-num" aria-hidden="true">
+          {String(n + 1).padStart(2, '0')}
+        </span>
+      </span>
+      <div className="member-names">
+        <h3>{m.name}</h3>
+        {m.ur && <Urdu className="member-ur">{m.ur}</Urdu>}
+      </div>
+    </Reveal>
+  );
+}
+
+function Team() {
+  const ref = useRef(null);
+  useScrollProgress(ref);
+  return (
+    <section id="team" className="team" ref={ref}>
+      <Heading over="The cast" ur="ہماری ٹیم">
         The people <em>behind it.</em>
       </Heading>
-      <div className="team-grid">
-        {team.map((m, i) => (
-          <Reveal
-            as="a"
-            key={m.name}
-            className="member"
-            delay={i * 90}
-            href={m.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${m.name} (opens Instagram)`}
-          >
-            <span className="member-photo">
-              <img src={m.img} alt="" loading="lazy" />
-            </span>
-            <h3>{m.name}</h3>
-          </Reveal>
+      <div className="cast">
+        {castColumns.map((col, c) => (
+          <div key={c} className={`cast-col cast-col-${c + 1}`}>
+            {col.map((i) => team[i] && <Member key={team[i].name} m={team[i]} n={i} lead={i === 0} />)}
+          </div>
         ))}
       </div>
     </section>
@@ -276,7 +313,7 @@ function Contact() {
   return (
     <section id="contact" className="contact">
       <div className="contact-glow" aria-hidden="true" />
-      <Heading over="Ready when you are" center>
+      <Heading over="Ready when you are" ur="رابطہ" center>
         Have a story to tell? <em>Let's cut it together.</em>
       </Heading>
       <Reveal className="contact-body">
@@ -347,7 +384,10 @@ export default function Home() {
         alt="A photographer checks his camera on a misty roadside"
         position="50% 42%"
       >
-        <p className="overline">Behind the lens</p>
+        <p className="overline overline-pair">
+          <span>Behind the lens</span>
+          <Urdu>کیمرے کے پیچھے</Urdu>
+        </p>
         <p className="interlude-line">
           Every frame starts with <em>someone paying attention.</em>
         </p>

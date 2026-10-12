@@ -38,7 +38,12 @@ export default function Footer() {
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Dastaan Productions. All rights reserved.</span>
-        <span className="overline">Fin.</span>
+        <span className="overline overline-pair">
+          <span>Fin.</span>
+          <span className="urdu" lang="ur" dir="rtl">
+            شکریہ
+          </span>
+        </span>
       </div>
     </footer>
   );

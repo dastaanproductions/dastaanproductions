@@ -64,6 +64,30 @@ h2 em {
   text-align: center;
 }
 
+/* Urdu twin set in Nastaliq: no tracking or capitals, which would break the script */
+.urdu {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Noto Naskh Arabic', serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.9;
+  color: var(--accent);
+}
+
+.overline-pair {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+}
+
+.overline-pair .urdu {
+  padding-left: 14px;
+  border-left: 1px solid var(--line-strong);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -436,6 +460,30 @@ h2 em {
   }
 }
 
+/* A tall photo on a wide screen: shown sharp on the right over a soft,
+   blurred copy of itself, edges melting into the frame */
+.hero-frame .hero-backdrop {
+  filter: blur(30px) saturate(0.75) brightness(0.5);
+  transform: scale(1.2);
+}
+
+.hero-frame.on .hero-backdrop {
+  animation: none;
+}
+
+@media (min-width: 861px) {
+  .hero-frame.portrait .hero-still {
+    position: absolute;
+    top: 0;
+    right: 2vw;
+    width: auto;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 52%, transparent 100%);
+    mask-image: radial-gradient(closest-side at 50% 50%, #000 52%, transparent 100%);
+  }
+}
+
 /* Grade: teal shadows, dark base for the title, soft vignette */
 .hero-grade {
   background:
@@ -464,7 +512,7 @@ h2 em {
 
 .hero-title {
   font-weight: 300;
-  font-size: clamp(48px, min(8.2vw, 15vh), 136px);
+  font-size: clamp(48px, min(7.6vw, 12.5vh), 124px);
   line-height: 0.95;
   letter-spacing: -0.02em;
 }
@@ -487,7 +535,8 @@ h2 em {
 }
 
 .hero-title .line:nth-child(1) > * { animation-delay: 1.4s; }
-.hero-title .line:nth-child(2) > * { animation-delay: 1.6s; }
+.hero-title .line:nth-child(2) > * { animation-delay: 1.55s; }
+.hero-title .line:nth-child(3) > * { animation-delay: 1.7s; }
 
 @keyframes lineUp {
   to {
@@ -1299,14 +1348,35 @@ h2 em {
   }
 }
 
-/* ── Team ────────────────────────────────────── */
-.team-grid {
+/* ── Team: the cast ──────────────────────────── */
+/* A large lead frame, then two offset columns that drift at different
+   speeds as the section scrolls (--p is set on .team by script). */
+.cast {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 36px 20px;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  align-items: start;
+  gap: 0 36px;
+}
+
+.cast-col {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  transform: translateY(calc(var(--p, 0) * var(--drift, 0px)));
+  will-change: transform;
+}
+
+.cast-col-2 {
+  margin-top: 180px;
+  --drift: -70px;
+}
+
+.cast-col-3 {
+  margin-top: 70px;
+  --drift: -150px;
 }
 
 .member {
@@ -1314,29 +1384,99 @@ h2 em {
 }
 
 .member-photo {
+  position: relative;
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   overflow: hidden;
   background: var(--bg-2);
 }
 
 .member img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
-  filter: grayscale(1) contrast(1.05) brightness(0.9);
-  transition: filter 0.8s ease, transform 1.2s var(--ease-out);
+  object-position: 50% 25%;
+  filter: grayscale(1) contrast(1.08) brightness(0.88);
+  transition: filter 0.9s ease, transform 1.4s var(--ease-out);
+}
+
+.member-lead img {
+  aspect-ratio: 4 / 5;
 }
 
 .member:hover img,
 .member:focus-visible img {
   filter: none;
-  transform: scale(1.04);
+  transform: scale(1.05);
+}
+
+/* Big italic frame number, like a slate */
+.member-num {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  font-family: var(--f-title);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 1;
+  color: rgba(239, 233, 223, 0.85);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
+  transition: color 0.4s ease;
+}
+
+.member-lead .member-num {
+  font-size: 64px;
+}
+
+.member:hover .member-num {
+  color: var(--accent);
+}
+
+.member-names {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
 }
 
 .member h3 {
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1.15;
+  transition: color 0.4s ease;
+}
+
+.member-lead h3 {
+  font-size: clamp(30px, 3vw, 40px);
+}
+
+.member:hover h3 {
+  color: var(--accent);
+}
+
+.member-ur {
+  font-size: 17px;
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .cast {
+    grid-template-columns: 1fr 1fr;
+    gap: 44px 16px;
+  }
+  .cast-col {
+    display: contents;
+  }
+  .member-lead {
+    grid-column: span 2;
+  }
+  .member h3 {
+    font-size: 21px;
+  }
+  .member-num {
+    font-size: 30px;
+  }
 }
 
 

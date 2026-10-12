@@ -44,11 +44,11 @@ export const clients = [
 ];
 
 export const team = [
-  { name: 'Syed Ali Gilani', role: 'CEO', img: member1, instagram: 'https://www.instagram.com/gilani.jpg/' },
-  { name: 'Hashim Ali', role: 'Managing Director', img: member2, instagram: 'https://www.instagram.com/thisishashimali/' },
-  { name: 'Ahmad Khattak', role: 'Cinematographer', img: member3, instagram: 'https://www.instagram.com/thisiskhattak/' },
-  { name: 'Syed Athar Abbas Gilani', role: 'Senior Editor', img: member4, instagram: 'https://www.instagram.com/its_syed_athar_bbas/' },
-  { name: 'Qasim Ali', role: 'Senior Editor', img: member5, instagram: 'https://www.instagram.com/_qasim_ali_56?igsh=ZWc2c2owbWt5ZHV6' },
+  { name: 'Syed Ali Gilani', ur: 'سید علی گیلانی', role: 'CEO', img: member1, instagram: 'https://www.instagram.com/gilani.jpg/' },
+  { name: 'Hashim Ali', ur: 'ہاشم علی', role: 'Managing Director', img: member2, instagram: 'https://www.instagram.com/thisishashimali/' },
+  { name: 'Ahmad Khattak', ur: 'احمد خٹک', role: 'Cinematographer', img: member3, instagram: 'https://www.instagram.com/thisiskhattak/' },
+  { name: 'Syed Athar Abbas Gilani', ur: 'سید اطہر عباس گیلانی', role: 'Senior Editor', img: member4, instagram: 'https://www.instagram.com/its_syed_athar_bbas/' },
+  { name: 'Qasim Ali', ur: 'قاسم علی', role: 'Senior Editor', img: member5, instagram: 'https://www.instagram.com/_qasim_ali_56?igsh=ZWc2c2owbWt5ZHV6' },
 ];
 
 export const photos = [
