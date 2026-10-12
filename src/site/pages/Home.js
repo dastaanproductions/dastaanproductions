@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaWhatsapp,
@@ -24,7 +24,6 @@ import { team, photos, services, contact } from '../data/siteInfo';
 import { reviews } from '../data/reviews';
 import Reviews from '../components/Reviews';
 import { scrollToId } from '../scroll';
-import useScrollProgress from '../useScrollProgress';
 
 import stillTungsten from '../../Components/aboutImage.jpg';
 import stillTeal from '../../Components/homeImage1.jpg';
@@ -220,50 +219,37 @@ function Photography() {
   );
 }
 
-// The team as a film's cast: a large lead frame, then two offset columns
-// that drift at different speeds as you scroll.
-const castColumns = [[0, 5], [1, 3], [2, 4]];
-
-function Member({ m, n, lead = false }) {
+// The team as a strip of film frames: narrow black-and-white slices that
+// open into a full colour close-up when hovered or focused.
+function Member({ m, n }) {
+  const Tag = m.instagram ? 'a' : 'div';
   const link = m.instagram
-    ? { as: 'a', href: m.instagram, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${m.name} (opens Instagram)` }
-    : { as: 'div' };
+    ? { href: m.instagram, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${m.name} (opens Instagram)` }
+    : { tabIndex: 0, 'aria-label': m.name };
   return (
-    <Reveal
-      {...link}
-      className={`member ${lead ? 'member-lead' : ''}`}
-      delay={(n % 3) * 120}
-      style={{ order: n }}
-    >
-      <span className="member-photo">
-        <img src={m.img} alt="" loading="lazy" />
-        <span className="member-num" aria-hidden="true">
-          {String(n + 1).padStart(2, '0')}
-        </span>
+    <Tag className="member" {...link}>
+      <img src={m.img} alt="" loading="lazy" />
+      <span className="member-shade" aria-hidden="true" />
+      <span className="member-num" aria-hidden="true">
+        {String(n + 1).padStart(2, '0')}
       </span>
-      <div className="member-names">
-        <h3>{m.name}</h3>
-        {m.ur && <Urdu className="member-ur">{m.ur}</Urdu>}
-      </div>
-    </Reveal>
+      {m.ur && <Urdu className="member-ur">{m.ur}</Urdu>}
+      <h3 className="member-name">{m.name}</h3>
+    </Tag>
   );
 }
 
 function Team() {
-  const ref = useRef(null);
-  useScrollProgress(ref);
   return (
-    <section id="team" className="team" ref={ref}>
+    <section id="team" className="team">
       <Heading over="The cast" ur="ہماری ٹیم">
         The people <em>behind it.</em>
       </Heading>
-      <div className="cast">
-        {castColumns.map((col, c) => (
-          <div key={c} className={`cast-col cast-col-${c + 1}`}>
-            {col.map((i) => team[i] && <Member key={team[i].name} m={team[i]} n={i} lead={i === 0} />)}
-          </div>
+      <Reveal className="cast-strip">
+        {team.map((m, n) => (
+          <Member key={m.name} m={m} n={n} />
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }

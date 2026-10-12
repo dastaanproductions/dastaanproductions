@@ -1426,137 +1426,165 @@ h2 em {
   }
 }
 
-/* ── Team: the cast ──────────────────────────── */
-/* A large lead frame, then two offset columns that drift at different
-   speeds as the section scrolls (--p is set on .team by script). */
-.cast {
+/* ── Team: a strip of film frames ────────────── */
+/* Six narrow black-and-white frames in one row. The hovered or focused
+   frame opens into a colour close-up; with nothing hovered, the first
+   (lead) frame is open. */
+.cast-strip {
   max-width: 1200px;
+  height: clamp(340px, 46vh, 460px);
   margin: 0 auto;
   padding: 0 24px;
-  display: grid;
-  grid-template-columns: 1.35fr 1fr 1fr;
-  align-items: start;
-  gap: 0 36px;
-}
-
-.cast-col {
   display: flex;
-  flex-direction: column;
-  gap: 80px;
-  transform: translateY(calc(var(--p, 0) * var(--drift, 0px)));
-  will-change: transform;
-}
-
-.cast-col-2 {
-  margin-top: 180px;
-  --drift: -70px;
-}
-
-.cast-col-3 {
-  margin-top: 70px;
-  --drift: -150px;
+  gap: 8px;
 }
 
 .member {
-  display: block;
-}
-
-.member-photo {
   position: relative;
-  display: block;
-  margin-bottom: 18px;
+  flex: 1 1 0;
+  min-width: 0;
   overflow: hidden;
   background: var(--bg-2);
+  transition: flex-grow 0.9s var(--ease-out);
 }
 
 .member img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  height: 100%;
   object-fit: cover;
-  object-position: 50% 25%;
-  filter: grayscale(1) contrast(1.08) brightness(0.88);
+  object-position: 50% 22%;
+  filter: grayscale(1) contrast(1.08) brightness(0.62);
+  transform: scale(1.08);
   transition: filter 0.9s ease, transform 1.4s var(--ease-out);
 }
 
-.member-lead img {
-  aspect-ratio: 4 / 5;
+.member-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 9, 8, 0) 45%, rgba(10, 9, 8, 0.85) 100%);
+}
+
+/* Open frame: the hovered/focused one, or the lead when none is */
+.member:hover,
+.member:focus-visible,
+.cast-strip:not(:hover):not(:focus-within) .member:first-child {
+  flex-grow: 4.2;
 }
 
 .member:hover img,
-.member:focus-visible img {
+.member:focus-visible img,
+.cast-strip:not(:hover):not(:focus-within) .member:first-child img {
   filter: none;
-  transform: scale(1.05);
+  transform: scale(1);
 }
 
-/* Big italic frame number, like a slate */
 .member-num {
   position: absolute;
   top: 14px;
-  left: 18px;
+  left: 14px;
   font-family: var(--f-title);
   font-style: italic;
   font-weight: 300;
-  font-size: 40px;
-  line-height: 1;
-  color: rgba(239, 233, 223, 0.85);
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
-  transition: color 0.4s ease;
-}
-
-.member-lead .member-num {
-  font-size: 64px;
-}
-
-.member:hover .member-num {
-  color: var(--accent);
-}
-
-.member-names {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 4px 16px;
-}
-
-.member h3 {
   font-size: 26px;
-  line-height: 1.15;
-  transition: color 0.4s ease;
+  line-height: 1;
+  color: rgba(239, 233, 223, 0.8);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
 }
 
-.member-lead h3 {
-  font-size: clamp(30px, 3vw, 40px);
+/* Closed frames show their Urdu name running up the frame */
+.member-ur {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  font-size: 20px;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--soft);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.6);
+  transform: translateX(-50%);
+  transition: opacity 0.4s ease;
 }
 
-.member:hover h3 {
+.member-name {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 18px;
+  margin: 0;
+  font-size: clamp(24px, 2.4vw, 32px);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.6s var(--ease-out);
+}
+
+.member:hover .member-name,
+.member:focus-visible .member-name,
+.cast-strip:not(:hover):not(:focus-within) .member:first-child .member-name {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.25s;
+}
+
+.member:hover .member-ur,
+.member:focus-visible .member-ur,
+.cast-strip:not(:hover):not(:focus-within) .member:first-child .member-ur {
+  opacity: 0;
+}
+
+.member:hover .member-num,
+.member:focus-visible .member-num,
+.cast-strip:not(:hover):not(:focus-within) .member:first-child .member-num {
   color: var(--accent);
 }
 
-.member-ur {
-  font-size: 17px;
-  color: var(--muted);
+/* Phones: a swipeable row of frames, each showing its name */
+@media (max-width: 760px), (hover: none) {
+  .cast-strip {
+    height: auto;
+    padding: 0 20px 8px;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .cast-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .member,
+  .member:hover,
+  .cast-strip:not(:hover):not(:focus-within) .member:first-child {
+    flex: 0 0 62%;
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: start;
+  }
+  .member img {
+    filter: grayscale(0.2) brightness(0.9);
+    transform: none;
+  }
+  .member-ur {
+    top: 12px;
+    bottom: auto;
+    left: auto;
+    right: 14px;
+    font-size: 17px;
+    transform: none;
+    opacity: 1 !important;
+  }
+  .member-name {
+    left: 16px;
+    right: 16px;
+    font-size: 22px;
+    white-space: normal;
+    opacity: 1;
+    transform: none;
+  }
 }
-
-@media (max-width: 760px) {
-  .cast {
-    grid-template-columns: 1fr 1fr;
-    gap: 44px 16px;
-  }
-  .cast-col {
-    display: contents;
-  }
-  .member-lead {
-    grid-column: span 2;
-  }
-  .member h3 {
-    font-size: 21px;
-  }
-  .member-num {
-    font-size: 30px;
-  }
-}
-
 
 /* ── Contact ─────────────────────────────────── */
 .contact {
@@ -2075,7 +2103,9 @@ h2 em {
     clip-path: none;
     transform: none;
   }
-  .mw {
+  .mw,
+  .member,
+  .member img {
     transition: none;
   }
   .marquee-track,
