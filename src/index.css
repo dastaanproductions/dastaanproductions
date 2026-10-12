@@ -1,25 +1,25 @@
 /* Global reset and design tokens for the Dastaan Productions site.
-   Fonts and palette come from the UI/UX Pro Max design system:
-   Archivo (display) + Space Grotesk (body) + JetBrains Mono (labels),
-   warm film-black with a cinema-red accent. */
+   Type: Cormorant Garamond (titles) + Inter (text), from the UI/UX Pro Max
+   luxury-serif pairing. Colour is graded from the studio's own stills:
+   warm black, bone white, tungsten amber, teal shadow. */
 :root {
-  --bg: #0b0a09;
-  --bg-2: #11100e;
-  --card: #161412;
-  --line: rgba(242, 237, 228, 0.1);
-  --line-strong: rgba(242, 237, 228, 0.22);
-  --text: #f2ede4;
-  --soft: #d6d0c6;
-  --muted: #a8a097;
-  --faint: #8a837a;
-  /* Red fill for buttons (white text passes 4.5:1); lighter red for text on black */
-  --accent: #d62f33;
-  --accent-text: #ff5a5f;
-  --on-accent: #ffffff;
+  --bg: #0a0908;
+  --bg-2: #100e0c;
+  --line: rgba(239, 233, 223, 0.1);
+  --line-strong: rgba(239, 233, 223, 0.24);
+  --text: #efe9df;
+  --soft: #d2cabe;
+  --muted: #a69d91;
+  --faint: #8a8176;
+  /* Tungsten amber: 9:1 on the background; dark text on it for buttons */
+  --accent: #e2a55c;
+  --on-accent: #140e07;
+  --teal: 61, 104, 104;
+  --rec: #e5484d;
 
-  --f-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
-  --f-body: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --f-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --f-title: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -41,7 +41,8 @@ body {
   color: var(--text);
   font-family: var(--f-body);
   font-size: 16px;
-  line-height: 1.5;
+  font-weight: 400;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;

@@ -1,13 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { formatTimecode } from './Timecode';
 
-// The whole page "plays" like a 3-minute edit: a red playhead runs along the
-// bottom of the nav as you scroll, with an editing-style timecode readout.
-const RUNTIME_SECONDS = 180;
-
+// A thin tungsten playhead along the bottom of the nav that follows your scroll.
 export default function ScrollTimeline() {
   const fillRef = useRef(null);
-  const tcRef = useRef(null);
 
   useEffect(() => {
     let frame = 0;
@@ -16,7 +11,6 @@ export default function ScrollTimeline() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
       if (fillRef.current) fillRef.current.style.transform = `scaleX(${p})`;
-      if (tcRef.current) tcRef.current.textContent = formatTimecode(p * RUNTIME_SECONDS);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -34,9 +28,6 @@ export default function ScrollTimeline() {
   return (
     <div className="timeline" aria-hidden="true">
       <span className="timeline-fill" ref={fillRef} />
-      <span className="timeline-tc" ref={tcRef}>
-        00:00:00:00
-      </span>
     </div>
   );
 }

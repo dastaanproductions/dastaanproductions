@@ -23,12 +23,12 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-col">
-          <span className="mono-label">Explore</span>
+          <span className="overline">Explore</span>
           <Link to="/">Home</Link>
           <Link to="/work">Long-form work</Link>
         </div>
         <div className="footer-col">
-          <span className="mono-label">Contact</span>
+          <span className="overline">Contact</span>
           <a href={`mailto:${contact.email}`}>{contact.email}</a>
           <a href={`tel:${contact.phoneDisplay.replace(/[^+\d]/g, '')}`}>{contact.phoneDisplay}</a>
         </div>
@@ -38,7 +38,7 @@ export default function Footer() {
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Dastaan Productions. All rights reserved.</span>
-        <span className="mono-label">End of reel</span>
+        <span className="overline">Fin.</span>
       </div>
     </footer>
   );

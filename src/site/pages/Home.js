@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   FaWhatsapp,
   FaPlay,
-  FaFilm,
-  FaMicrophone,
-  FaMobileAlt,
-  FaCamera,
   FaInstagram,
   FaFacebook,
   FaBehance,
@@ -19,76 +15,67 @@ import Reveal from '../components/Reveal';
 import VideoCard from '../components/VideoCard';
 import VideoModal from '../components/VideoModal';
 import Timecode from '../components/Timecode';
-import { reels } from '../data/videos';
+import HeroReel from '../components/HeroReel';
+import Manifesto from '../components/Manifesto';
+import ServiceList from '../components/ServiceList';
+import { reels, thumbUrl } from '../data/videos';
 import { clients, team, photos, services, contact } from '../data/siteInfo';
 import { scrollToId } from '../scroll';
 
-const serviceIcons = { film: FaFilm, mic: FaMicrophone, phone: FaMobileAlt, camera: FaCamera };
+import stillTungsten from '../../Components/aboutImage.jpg';
+import stillTeal from '../../Components/homeImage1.jpg';
+import stillSunset from '../../Components/homeImage.jpg';
+
 const socialIcons = { instagram: FaInstagram, facebook: FaFacebook, behance: FaBehance };
 
-const tilts = [-4, 2, -2, 3, -3, 2, -3, 2];
-const lifts = [14, -6, 10, -10, 12, -8, 10, -6];
+const heroFrames = [
+  { src: stillTungsten, origin: '30% 55%' },
+  { src: stillTeal, origin: '55% 40%' },
+  { src: stillSunset, origin: '65% 50%' },
+];
 
-// Lets a card's glow follow the pointer.
-function trackSpotlight(e) {
+// Preview stills for the service rows, in the same order as `services`.
+const servicePreviews = [stillTeal, thumbUrl('o3gUbbbYLvI'), thumbUrl(reels[3].id), photos[5].src];
+
+const tilts = [-3, 2, -2, 3, -2, 2, -3, 2];
+const lifts = [12, -6, 10, -8, 12, -6, 10, -6];
+
+// Lets the hero's "projector light" follow the pointer.
+function trackLight(e) {
   const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+  e.currentTarget.style.setProperty('--lx', `${((e.clientX - r.left) / r.width) * 100}%`);
+  e.currentTarget.style.setProperty('--ly', `${((e.clientY - r.top) / r.height) * 100}%`);
 }
 
-// Section heading styled as a numbered chapter of the edit.
-function Chapter({ n, label, title, intro }) {
+// Quiet section heading: a credit-style overline and a serif title.
+function Heading({ over, children, intro, center = false }) {
   return (
-    <Reveal className="chapter-head">
-      <p className="chapter-label">
-        <span className="chapter-num">CH.{n}</span>
-        <span>{label}</span>
-      </p>
-      <div className="chapter-body">
-        <h2>{title}</h2>
-        {intro && <p>{intro}</p>}
-      </div>
+    <Reveal className={`heading ${center ? 'center-text' : ''}`}>
+      <p className="overline">{over}</p>
+      <h2>{children}</h2>
+      {intro && <p className="heading-intro">{intro}</p>}
     </Reveal>
   );
 }
 
 function Hero() {
   return (
-    <section id="home" className="hero">
-      <div className="hero-glow" aria-hidden="true" />
-      <div className="viewfinder" aria-hidden="true">
-        <span className="vf-corner tl" />
-        <span className="vf-corner tr" />
-        <span className="vf-corner bl" />
-        <span className="vf-corner br" />
-        <span className="vf-rec">
-          <span className="rec-dot" /> REC
-        </span>
-        <Timecode className="vf-tc" />
-        <span className="vf-meta">16:9 · 25 FPS</span>
-      </div>
+    <section id="home" className="hero" onPointerMove={trackLight}>
+      <HeroReel frames={heroFrames} />
+      <div className="hero-grade" aria-hidden="true" />
+      <div className="hero-light" aria-hidden="true" />
       <div className="hero-inner">
-        <p className="badge fade-up d1">
-          <span className="dot" aria-hidden="true" />
-          Open for new projects
-        </p>
+        <p className="overline fade-up d1">Video · Podcast · Photography</p>
         <h1 className="hero-title">
           <span className="line">
-            <span>Stories worth</span>
-          </span>{' '}
-          <span className="line">
-            <span>watching,</span>
+            <span>Stories worth watching,</span>
           </span>{' '}
           <span className="line">
             <em>cut with care.</em>
           </span>
         </h1>
-        <div className="hero-foot">
-          <p className="lead fade-up d3">
-            Dastaan Productions is a video, podcast and photography studio for creators, brands and agencies. We turn
-            raw footage into stories people finish.
-          </p>
-          <div className="hero-actions fade-up d4">
+        <div className="hero-foot fade-up d3">
+          <div className="hero-actions">
             <button type="button" className="btn btn-primary" onClick={() => scrollToId('work')}>
               <FaPlay aria-hidden="true" /> See the work
             </button>
@@ -101,26 +88,24 @@ function Hero() {
               <FaWhatsapp aria-hidden="true" /> Message on WhatsApp
             </a>
           </div>
+          <p className="hero-status">
+            <span className="rec-dot" aria-hidden="true" />
+            Open for new projects
+            <Timecode className="hero-tc" />
+          </p>
         </div>
       </div>
+      <span className="scroll-cue" aria-hidden="true" />
     </section>
   );
 }
 
-function Ticker() {
-  const words = services.map((s) => s.title);
-  const row = [...words, ...words];
+function Statement() {
   return (
-    <div className="ticker" aria-hidden="true">
-      <div className="ticker-track">
-        {[...row, ...row].map((w, i) => (
-          <span key={i} className={i % 2 ? 'ticker-word outline' : 'ticker-word'}>
-            {w}
-            <i className="ticker-dot" />
-          </span>
-        ))}
-      </div>
-    </div>
+    <section className="statement" aria-label="About Dastaan Productions">
+      <p className="overline">Dastaan Productions</p>
+      <Manifesto text="A video, podcast and photography studio for creators, brands and agencies. We turn raw footage into stories people finish, cut for rhythm, for feeling, for the moment your audience leans in." />
+    </section>
   );
 }
 
@@ -128,9 +113,7 @@ function Clients() {
   const loop = [...clients, ...clients, ...clients, ...clients];
   return (
     <section id="clients" className="clients">
-      <Reveal>
-        <p className="mono-label clients-label">Trusted by brands and teams who care about their story</p>
-      </Reveal>
+      <p className="overline center-text">Trusted by</p>
       <div className="marquee">
         <div className="marquee-track">
           {loop.map((c, i) => (
@@ -156,16 +139,9 @@ function Reels({ onOpen }) {
   const loop = [...reels, ...reels];
   return (
     <section id="work" className="work">
-      <Chapter
-        n="01"
-        label="Selected work"
-        title={
-          <>
-            Work that <em>speaks for itself.</em>
-          </>
-        }
-        intro="Recent reels and shorts. Tap one to watch it."
-      />
+      <Heading over="Selected work" intro="Recent reels and shorts. Tap one to watch it.">
+        Work that <em>speaks for itself.</em>
+      </Heading>
       <div className="strip">
         <div className="strip-track">
           {loop.map((v, i) => {
@@ -177,7 +153,6 @@ function Reels({ onOpen }) {
                 variant="reel"
                 onOpen={onOpen}
                 decorative={i >= reels.length}
-                index={n + 1}
                 style={{ '--tilt': `${tilts[n % tilts.length]}deg`, '--lift': `${lifts[n % lifts.length]}px` }}
               />
             );
@@ -185,8 +160,8 @@ function Reels({ onOpen }) {
         </div>
       </div>
       <Reveal className="center">
-        <Link to="/work" className="btn btn-ghost">
-          View long-form work <FaArrowRight aria-hidden="true" className="btn-arrow" />
+        <Link to="/work" className="text-link">
+          View long-form work <FaArrowRight aria-hidden="true" />
         </Link>
       </Reveal>
     </section>
@@ -194,58 +169,33 @@ function Reels({ onOpen }) {
 }
 
 function Services() {
+  const items = services.map((s, i) => ({ ...s, preview: servicePreviews[i] }));
   return (
     <section id="services" className="services">
-      <Chapter
-        n="02"
-        label="Services"
-        title={
-          <>
-            What we <em>make.</em>
-          </>
-        }
-        intro="Clean, story-first work across the formats your audience watches."
-      />
-      <div className="service-grid">
-        {services.map((s, i) => {
-          const Icon = serviceIcons[s.icon];
-          return (
-            <Reveal key={s.title} className="card spot" delay={i * 90} onPointerMove={trackSpotlight}>
-              <div className="card-top">
-                <Icon className="card-icon" aria-hidden="true" />
-                <span className="mono-label">{String(i + 1).padStart(2, '0')}</span>
-              </div>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </Reveal>
-          );
-        })}
-      </div>
+      <Heading over="What we make">
+        Clean, story-first work <em>in every format.</em>
+      </Heading>
+      <Reveal>
+        <ServiceList items={items} />
+      </Reveal>
     </section>
   );
 }
 
 function Process() {
   const steps = [
-    { n: '01', title: 'Brief', text: 'Tell us about the project, share the footage, and we agree on style, length and deadline.' },
-    { n: '02', title: 'First cut', text: 'You receive a first version to react to, and you leave notes right on the timeline.' },
-    { n: '03', title: 'Polish & delivery', text: 'We refine until it is right, then deliver in every format and size you need.' },
+    { n: 'I', title: 'Brief', text: 'Tell us about the project, share the footage, and we agree on style, length and deadline.' },
+    { n: 'II', title: 'First cut', text: 'You receive a first version to react to, and you leave notes right on the timeline.' },
+    { n: 'III', title: 'Polish & delivery', text: 'We refine until it is right, then deliver in every format and size you need.' },
   ];
   return (
     <section id="process" className="process">
-      <Chapter
-        n="03"
-        label="No friction, from day one"
-        title={
-          <>
-            A simple process, <em>handled end to end.</em>
-          </>
-        }
-      />
+      <Heading over="No friction, from day one">
+        A simple process, <em>handled end to end.</em>
+      </Heading>
       <Reveal as="ol" className="process-track">
         {steps.map((s, i) => (
           <li key={s.n} className="step" style={{ '--i': i }}>
-            <span className="keyframe" aria-hidden="true" />
             <span className="step-num">{s.n}</span>
             <h3>{s.title}</h3>
             <p>{s.text}</p>
@@ -259,24 +209,14 @@ function Process() {
 function Photography() {
   return (
     <section id="photography" className="photography">
-      <Chapter
-        n="04"
-        label="Photography"
-        title={
-          <>
-            Through the <em>lens.</em>
-          </>
-        }
-        intro="Product, portrait, street and wedding photography."
-      />
+      <Heading over="Photography" intro="Product, portrait, street and wedding photography.">
+        Through the <em>lens.</em>
+      </Heading>
       <div className="photo-grid">
         {photos.map((p, i) => (
-          <Reveal key={p.src} className={`photo photo-${i + 1}`} delay={(i % 4) * 80}>
+          <Reveal key={p.src} className={`photo photo-${i + 1}`} delay={(i % 4) * 110}>
             <img src={p.src} alt={p.caption} loading="lazy" />
-            <span className="photo-caption">
-              <span className="mono-label">{String(i + 1).padStart(2, '0')}</span>
-              {p.caption}
-            </span>
+            <span className="photo-caption">{p.caption}</span>
           </Reveal>
         ))}
       </div>
@@ -287,22 +227,16 @@ function Photography() {
 function Team() {
   return (
     <section id="team" className="team">
-      <Chapter
-        n="05"
-        label="Team"
-        title={
-          <>
-            The people <em>behind it.</em>
-          </>
-        }
-      />
+      <Heading over="The team">
+        The people <em>behind it.</em>
+      </Heading>
       <div className="team-grid">
         {team.map((m, i) => (
           <Reveal
             as="a"
             key={m.name}
             className="member"
-            delay={i * 80}
+            delay={i * 90}
             href={m.instagram}
             target="_blank"
             rel="noopener noreferrer"
@@ -311,10 +245,8 @@ function Team() {
             <span className="member-photo">
               <img src={m.img} alt="" loading="lazy" />
             </span>
-            <div className="member-info">
-              <h3>{m.name}</h3>
-              <p className="mono-label">{m.role}</p>
-            </div>
+            <h3>{m.name}</h3>
+            <p>{m.role}</p>
           </Reveal>
         ))}
       </div>
@@ -342,16 +274,10 @@ function Contact() {
   return (
     <section id="contact" className="contact">
       <div className="contact-glow" aria-hidden="true" />
-      <Chapter
-        n="06"
-        label="Ready when you are"
-        title={
-          <>
-            Have a story to tell? <em>Let's cut it together.</em>
-          </>
-        }
-      />
-      <Reveal className="contact-card">
+      <Heading over="Ready when you are" center>
+        Have a story to tell? <em>Let's cut it together.</em>
+      </Heading>
+      <Reveal className="contact-body">
         <div className="contact-info">
           <a className="info-row" href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener noreferrer">
             <FaWhatsapp aria-hidden="true" />
@@ -398,7 +324,7 @@ function Contact() {
           <label htmlFor="c-email">Email</label>
           <input id="c-email" name="email" type="email" autoComplete="email" value={form.email} onChange={update} required />
           <label htmlFor="c-message">Tell us about your project</label>
-          <textarea id="c-message" name="message" rows="5" value={form.message} onChange={update} required />
+          <textarea id="c-message" name="message" rows="4" value={form.message} onChange={update} required />
           <button type="submit" className="btn btn-primary">
             Send message <FaArrowRight aria-hidden="true" className="btn-arrow" />
           </button>
@@ -413,9 +339,9 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Ticker />
-      <Clients />
+      <Statement />
       <Reels onOpen={setPlaying} />
+      <Clients />
       <Services />
       <Process />
       <Photography />

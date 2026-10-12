@@ -17,7 +17,7 @@ export default function Work() {
       <section className="page-hero">
         <div className="hero-glow" aria-hidden="true" />
         <div className="hero-inner">
-          <p className="mono-label fade-up d1">Long-form work</p>
+          <p className="overline fade-up d1">Long-form work</p>
           <h1 className="hero-title">
             <span className="line">
               <span>Every story,</span>
@@ -42,10 +42,9 @@ export default function Work() {
         </div>
       </section>
 
-      {shown.map((c, n) => (
+      {shown.map((c) => (
         <section key={c.id} id={`cat-${c.id}`} className="category">
           <Reveal className="cat-head">
-            <span className="mono-label">CH.{String(n + 1).padStart(2, '0')}</span>
             <h2>
               {c.title} <em>{c.accent}</em>
             </h2>
